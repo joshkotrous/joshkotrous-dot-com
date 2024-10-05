@@ -52,7 +52,7 @@ const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
           <li key={post.title} className="flex flex-col">
             <div className="flex gap-4 items-end justify-between">
               <Link href={`/blog/${post.slug}`}>
-                <h3 className="leading-7 hover:underline cursor-pointer">
+                <h3 className="leading-7 md:leading-10 hover:underline cursor-pointer">
                   {post.title}
                 </h3>
               </Link>
