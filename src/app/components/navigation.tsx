@@ -1,6 +1,8 @@
 import Link from "next/link";
 import React from "react";
 import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
+import { IoLogoGithub } from "react-icons/io";
+
 const Navigation = () => {
   return (
     <div className="p-4 flex gap-4 justify-between xl:justify-center w-screen items-center fixed">
@@ -37,6 +39,9 @@ const Navigation = () => {
         </Link>
         <Link target="_blank" href="https://www.linkedin.com/in/joshkotrous">
           <FaLinkedin />
+        </Link>
+        <Link target="_blank" href="https://www.github.com/joshkotrous">
+          <IoLogoGithub />
         </Link>
       </div>
     </div>
