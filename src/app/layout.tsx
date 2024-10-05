@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navigation from "./components/navigation";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Josh Kotrous",
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <Navigation />
         {children}
+        <Analytics />
       </body>
     </html>
   );

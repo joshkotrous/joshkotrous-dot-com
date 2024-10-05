@@ -28,7 +28,7 @@ export async function generateMetadata({
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://joshkotrous.io/blog/${params.post}`,
+      url: `https://joshkotrous.com/blog/${params.post}`,
       type: "article",
     },
     twitter: {
@@ -62,18 +62,20 @@ const Post = async ({ params }: { params: { post: string } }) => {
         <p className="text-zinc-500 cursor-default">Share This Article</p>
         <div className="flex gap-2 text-2xl">
           <Link
-            href={`https://www.linkedin.com/shareArticle?mini=true&url=https://joshkotrous.io/blog/${params.post}&title=${post.title}`}
+            href={`https://www.linkedin.com/shareArticle?mini=true&url=https://joshkotrous.com/blog/${params.post}&title=${post.title}`}
             target="_blank"
           >
             <FaLinkedin />
           </Link>
           <Link
-            href={`https://twitter.com/intent/tweet?url=https://joshkotrous.io/blog/${params.post}`}
+            href={`https://twitter.com/intent/tweet?url=https://joshkotrous.com/blog/${params.post}`}
             target="_blank"
           >
             <FaXTwitter />
           </Link>
-          <CopyToClipboard url={`https://joshkotrous.io/blog/${params.post}`} />
+          <CopyToClipboard
+            url={`https://joshkotrous.com/blog/${params.post}`}
+          />
         </div>
         <div
           className="content"
