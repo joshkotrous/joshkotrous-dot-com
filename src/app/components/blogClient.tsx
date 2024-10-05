@@ -6,6 +6,7 @@ import Link from "next/link";
 export interface Post {
   slug: string;
   content?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 const categories = ["Latest", "Engineering Leadership"];

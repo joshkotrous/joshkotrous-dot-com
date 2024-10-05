@@ -9,6 +9,9 @@ const Navigation = () => {
         <br className="md:hidden" />
         <span className="text-[10px] md:text-base">
           {" "}
+          {
+            // eslint-disable-next-line react/jsx-no-comment-textnodes
+          }
           // Founding Engineer @{" "}
           <Link
             href="https://pensarai.app"
