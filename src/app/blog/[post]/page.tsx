@@ -60,7 +60,7 @@ const Post = async ({ params }: { params: { post: string } }) => {
           <p>{post.date}</p>
         </div>
         <p className="text-zinc-500 cursor-default">Share This Article</p>
-        <div className="flex gap-2 text-2xl">
+        <div className="flex gap-2 text-2xl z-50">
           <Link
             href={`https://www.linkedin.com/shareArticle?mini=true&url=https://joshkotrous.com/blog/${params.post}&title=${post.title}`}
             target="_blank"
