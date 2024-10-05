@@ -47,7 +47,7 @@ const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
           ))}
         </ul>
       </div>
-      <ul>
+      <ul className="flex flex-col gap-4">
         {filteredPosts.map((post) => (
           <li key={post.title} className="flex flex-col">
             <div className="flex gap-4 items-end justify-between">
