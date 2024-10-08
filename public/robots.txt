@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://joshkotrous.com
+
+# Sitemaps
+Sitemap: https://joshkotrous.com/sitemap.xml
