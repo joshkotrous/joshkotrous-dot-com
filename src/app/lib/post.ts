@@ -3,12 +3,23 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+// Define a type for the post data
+type PostData = {
+  title?: string;
+  date?: string; // Assuming date is stored as a string in the frontmatter
+  [key: string]: any; // Allow other properties
+};
 
+// Define a type for the post including the content and slug
+type Post = {
+  slug: string;
+  content: string;
+} & PostData;
 const postsDirectory = path.join(process.cwd(), "posts");
 
 export function getAllPosts() {
   const filenames = fs.readdirSync(postsDirectory);
-  const posts = filenames.map((filename) => {
+  const posts: Post[] = filenames.map((filename) => {
     const filePath = path.join(postsDirectory, filename);
     const fileContents = fs.readFileSync(filePath, "utf8");
     const { data, content } = matter(fileContents);
@@ -22,7 +33,9 @@ export function getAllPosts() {
     };
   });
 
-  return posts;
+  return posts.sort(
+    (a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime()
+  );
 }
 
 export async function getPostBySlug(slug: string) {

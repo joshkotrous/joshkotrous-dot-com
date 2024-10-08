@@ -9,7 +9,7 @@ export interface Post {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
-const categories = ["Latest", "Engineering Leadership"];
+const categories = ["Latest", "Engineering Leadership", "Career"];
 
 const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
   const [category, setCategory] = useState("Latest");
