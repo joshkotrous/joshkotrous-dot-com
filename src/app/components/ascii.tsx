@@ -14,7 +14,7 @@ const Ascii = ({ className }: { className?: string }) => {
     ${className}
   `}
     >
-      <Image width={300} height={100} src="/Asset 1.svg" alt="Glowing SVG" />
+      <Image width={300} height={100} src="/Asset 3.svg" alt="Glowing SVG" />
     </div>
   );
 };
