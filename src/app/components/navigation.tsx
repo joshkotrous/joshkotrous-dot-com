@@ -1,7 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
-import { IoLogoGithub } from "react-icons/io";
 
 const Navigation = () => {
   return (

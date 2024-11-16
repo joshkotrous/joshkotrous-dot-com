@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Ascii from "./components/ascii";
-import HeroBanner from "./components/heroBanner";
 import { FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { IoLogoGithub } from "react-icons/io";
 
