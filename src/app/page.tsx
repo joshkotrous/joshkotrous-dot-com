@@ -21,7 +21,7 @@ export default function Home() {
               </div>
               <div className="absolute w-full">0.0.0</div>
             </div>
-            <div className="pb-2 pr-2 pl-2 overflow-scroll flex-1">
+            <div className="pb-1 pr-1 pl-1 overflow-scroll flex-1">
               <div className=" h-full border-[1px] border-green-500 p-2 flex-1 overflow-scroll">
                 <div className="text-xs md:text-base flex flex-col h-fit">
                   <div className="space-y-4">
