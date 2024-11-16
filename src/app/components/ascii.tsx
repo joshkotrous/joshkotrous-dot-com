@@ -5,16 +5,26 @@ const Ascii = ({ className }: { className?: string }) => {
   return (
     <div
       className={`
-    relative inline-block
-    before:absolute before:content-[''] 
-    before:inset-0 before:-z-10 
-    before:bg-[url('/Asset%201.svg')] 
-    before:bg-no-repeat before:bg-contain
-    before:blur-xl before:opacity-50
-    ${className}
-  `}
+        relative 
+        w-full
+        h-full
+        before:absolute before:content-[''] 
+        before:inset-0 before:-z-10 
+        before:bg-[url('/Asset%201.svg')] 
+        before:bg-no-repeat before:bg-contain before:bg-center
+        before:blur-xl before:opacity-50
+        ${className}
+      `}
     >
-      <Image width={300} height={100} src="/Asset 3.svg" alt="Glowing SVG" />
+      <div className="relative w-full aspect-square">
+        <Image
+          src="/Asset 4.svg"
+          alt="Glowing SVG"
+          fill
+          className="object-contain"
+          priority
+        />
+      </div>
     </div>
   );
 };
