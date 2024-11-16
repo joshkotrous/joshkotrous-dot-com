@@ -13,13 +13,13 @@ export default function Home() {
           </div>
 
           <div className="aspect-square border-[1px] border-green-500 bg-green-950/25 flex flex-col">
-            <div className="text-[8px] w-full text-center items-center flex relative py-1 px-1">
+            <div className=" w-full text-center items-center flex relative py-1 px-1">
               <div className="flex gap-1">
                 <div className="size-[4px] bg-green-600 rounded-full"></div>
                 <div className="size-[4px] bg-green-600 rounded-full"></div>
                 <div className="size-[4px] bg-green-600 rounded-full"></div>
               </div>
-              <div className="absolute w-full">0.0.0</div>
+              <div className="absolute w-full text-[6px]">0.0.0</div>
             </div>
             <div className="pb-1 pr-1 pl-1 overflow-scroll flex-1">
               <div className=" h-full border-[1px] border-green-500 p-2 flex-1 overflow-scroll">
