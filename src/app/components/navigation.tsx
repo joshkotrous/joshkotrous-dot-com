@@ -33,7 +33,7 @@ const Navigation = () => {
         </Link>
         {/* <li>Projects</li> */}
       </ul>
-      <div className="flex gap-2 xl:absolute right-4 text-xl">
+      {/* <div className="flex gap-2 xl:absolute right-4 text-xl">
         <Link target="_blank" href="https://www.x.com/kotro___">
           <FaXTwitter />
         </Link>
@@ -43,7 +43,7 @@ const Navigation = () => {
         <Link target="_blank" href="https://www.github.com/joshkotrous">
           <IoLogoGithub />
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

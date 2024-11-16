@@ -1,24 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'FakeReceipt';
-  src: url('./fonts/FakeReceipt.otf') format('opentype'); /* Modern browsers */
+.geist-mono {
+  font-family: "Geist Mono", monospace;
+  font-optical-sizing: auto;
   font-weight: normal;
   font-style: normal;
 }
 
+
 :root {
-  --background: rgb(21, 21, 21);
-  --foreground: #FFFF;
+  --background: rgb(12, 12, 12);
+
 }
 
 
 body {
-  color: var(--foreground);
+  @apply text-green-400;
   background: var(--background);
-  font-family: "FakeReceipt";
+  font-family: "Geist Mono", monospace;
 }
 
 h1 {
