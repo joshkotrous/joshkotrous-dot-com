@@ -6,7 +6,7 @@ import { IoLogoGithub } from "react-icons/io";
 export default function Home() {
   return (
     <div className="min-h-screen overflow-hidden pt-[4.5rem]">
-      <main className="flex justify-center px-4">
+      <main className="flex justify-center px-2">
         <div className="grid grid-cols-2 gap-2 w-full max-w-3xl">
           <div className="aspect-square">
             <Ascii />
