@@ -35,8 +35,8 @@ const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
           {categories.map((item) => (
             <li
               key={item}
-              className={`cursor-pointer bg-[var(--background)] hover:invert p-1 transition-all ${
-                item === category && "invert"
+              className={`cursor-pointer bg-[var(--background)] hover:bg-green-400/25 p-1 transition-all ${
+                item === category && "bg-green-400/25"
               }`}
               onClick={() => {
                 setCategory(item);
@@ -61,7 +61,7 @@ const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
             </div>
             <div className="flex flex-col gap-2">
               <p className="">{post.description}</p>
-              <div className="bg-[var(--background)] invert w-fit p-1 text-sm">
+              <div className="bg-green-400/25 w-fit p-1 text-sm">
                 {post.category}
               </div>
             </div>
