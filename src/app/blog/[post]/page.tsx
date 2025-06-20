@@ -42,7 +42,7 @@ export async function generateMetadata({
     title: `Josh Kotrous | ${post.title}`,
     description: post.description,
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://joshkotrous.com"
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://joshkotrous.com/blog"
     ),
     openGraph: {
       title: post.title,
