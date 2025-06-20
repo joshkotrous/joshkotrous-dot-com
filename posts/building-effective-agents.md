@@ -3,12 +3,12 @@ title: Building Effective Agents
 date: 6-19-2025
 description: Covers key methods to create effective AI agents that can understand your data and take action
 category: Engineering
+image: building-effective-agents.png
 ---
 
 ## Introduction
 
-Large Language Models in 2025 are more powerful and flexible than ever. Modern foundation models can handle multi-modal input, follow complex instructions, and even perform structured outputs – capabilities that have grown significantly since the early days of ChatGPT. Just as importantly, the ecosystem around LLMs has matured: developer frameworks like the Vercel AI SDK have evolved rapidly, adding support for a wide range of providers and features. The Vercel AI SDK (an open-source TypeScript toolkit from Vercel) reached version 4.1 in early 2025, introducing multi-provider integration and enhanced agent capabilities. These robust SDKs let product teams prototype and ship AI-powered features quickly, with built-in support for streaming, function calling, and tool integrations.  
-
+Large Language Models in 2025 are more powerful and flexible than ever. Modern foundation models can handle multi-modal input, follow complex instructions, and even perform structured outputs – capabilities that have grown significantly since the early days of ChatGPT. Just as importantly, the ecosystem around LLMs has matured: developer frameworks like the Vercel AI SDK have evolved rapidly, adding support for a wide range of providers and features. The Vercel AI SDK (an open-source TypeScript toolkit from Vercel) reached version 4.1 in early 2025, introducing multi-provider integration and enhanced agent capabilities. These robust SDKs let product teams prototype and ship AI-powered features quickly, with built-in support for streaming, function calling, and tool integrations.
 
 Even with these advances, building an “agent” – an autonomous LLM-based system – requires more than just a clever prompt. An agent is ultimately only as capable as the **tools** you equip it with and the **instructions** you give it. A 2025-era LLM can reason impressively, but if it lacks access to the right information or actions, it will still hit a wall. To unlock their full potential, we must furnish LLMs with external tools (for actions and data access) and guide them with clear prompting on how and when to use those tools. In this article, we’ll explore how to build effective LLM agents by going beyond basic prompting: enabling tool use, creating custom tools, ensuring security, adding memory, tracing their behavior, and crafting prompts that tie it all together.
 

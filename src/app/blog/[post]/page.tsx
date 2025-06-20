@@ -42,7 +42,7 @@ export async function generateMetadata({
     title: `Josh Kotrous | ${post.title}`,
     description: post.description,
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://joshkotrous.com"
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://joshkotrous.com/blog/images/"
     ),
     openGraph: {
       title: post.title,
@@ -50,16 +50,30 @@ export async function generateMetadata({
       url: `https://joshkotrous.com/blog/${params.post}`,
       type: "article",
       images: post.image
-        ? [{ url: post.image, width: 1200, height: 630, alt: post.title }]
-        : "./blog/opengraph-image.png",
+        ? [
+            {
+              url: `${post.image}`,
+              width: 1200,
+              height: 630,
+              alt: post.title,
+            },
+          ]
+        : "./default-image.png",
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
       images: post.image
-        ? [{ url: post.image, width: 1200, height: 630, alt: post.title }]
-        : "./blog/twitter-image.png",
+        ? [
+            {
+              url: `${post.image}`,
+              width: 1200,
+              height: 630,
+              alt: post.title,
+            },
+          ]
+        : "./default-image.png",
     },
   };
 }
