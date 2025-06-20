@@ -60,7 +60,7 @@ const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
               <p className="text-nowrap">{post.date}</p>
             </div>
             <div className="flex flex-col gap-2">
-              <p className="">{post.description}</p>
+              <p className="text-zinc-400">{post.description}</p>
               <div className="bg-green-400/25 w-fit p-1 text-sm">
                 {post.category}
               </div>

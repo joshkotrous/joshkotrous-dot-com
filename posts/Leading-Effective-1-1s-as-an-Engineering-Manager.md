@@ -31,37 +31,29 @@ Giving feedback is equally as important as receiving it, too. Check in with your
 
 The one-on-one meeting is only as effective as the output that follows it - but we all have a full plate and it would be impossible for anyone to remember every detail of a meeting. To ensure accountability on both sides, it’s recommended to take notes during every one-on-one. Taking notes will make it easier to follow up on past conversations, update other stakeholders, and incorporate major takeaways into performance reviews. Feel free to incorporate my personal template into your notes:
 
-&nbsp;
+&nbsp;&nbsp;To Discuss:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To Discuss:
+&nbsp;&nbsp;&nbsp;&nbsp;1.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.
+&nbsp;&nbsp;&nbsp;&nbsp;2.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.
-
-&nbsp;
-
-<!--
 | Project | Due Date | Status | Blockers/Next Steps | Cross Functional Partners |
 | ------- | -------- | ------ | ------------------- | ------------------------- |
 | &nbsp;  |          |        |                     |                           |
-| &nbsp;  |          |        |                     |                           | -->
+| &nbsp;  |          |        |                     |                           |
 
-&nbsp;
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Action Items:
+&nbsp;&nbsp;Items:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.
+&nbsp;&nbsp;&nbsp;&nbsp;1.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.
+&nbsp;&nbsp;&nbsp;&nbsp;2.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feedback:
+&nbsp;&nbsp;Feedback:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.
+&nbsp;&nbsp;&nbsp;&nbsp;1.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.
-
-&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;2.
 
 ## Let the Engineer Lead
 

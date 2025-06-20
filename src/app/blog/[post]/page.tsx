@@ -2,18 +2,34 @@ import Link from "next/link";
 import React from "react";
 import { getPostBySlug } from "../../lib/post";
 import { notFound } from "next/navigation";
-import type { Post } from "@/app/components/blogClient";
-import "./page.css";
+import type { Post } from "@/app/lib/post";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import CopyToClipboard from "@/app/components/copyToClipboard";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Metadata } from "next";
+import remarkGfm from "remark-gfm";
+
+const customTheme = {
+  ...oneDark,
+  'pre[class*="language-"]': {
+    ...(oneDark['pre[class*="language-"]'] || {}),
+    background: "#000000", // custom black background
+  },
+  'code[class*="language-"]': {
+    ...(oneDark['code[class*="language-"]'] || {}),
+    background: "#000000",
+  },
+};
 
 export async function generateMetadata({
   params,
 }: {
   params: { post: string };
-}) {
-  const post: Post = await getPostBySlug(params.post);
+}): Promise<Metadata> {
+  const post: Post | null = await getPostBySlug(params.post);
 
   if (!post) {
     return {
@@ -24,23 +40,29 @@ export async function generateMetadata({
 
   return {
     title: `Josh Kotrous | ${post.title}`,
-    description: post.excerpt,
+    description: post.description,
     openGraph: {
       title: post.title,
       description: post.description,
       url: `https://joshkotrous.com/blog/${params.post}`,
       type: "article",
+      images: post.image
+        ? [{ url: post.image, width: 1200, height: 630, alt: post.title }]
+        : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      images: post.image
+        ? [{ url: post.image, width: 1200, height: 630, alt: post.title }]
+        : undefined,
     },
   };
 }
 
-const Post = async ({ params }: { params: { post: string } }) => {
-  const post: Post = await getPostBySlug(params.post);
+const PostPage = async ({ params }: { params: { post: string } }) => {
+  const post = await getPostBySlug(params.post);
 
   if (!post) {
     return notFound();
@@ -77,13 +99,66 @@ const Post = async ({ params }: { params: { post: string } }) => {
             url={`https://joshkotrous.com/blog/${params.post}`}
           />
         </div>
-        <div
-          className="content"
-          dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-        />
+        <div className="content">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              p({ ...props }) {
+                return <p className="text-zinc-300">{props.children}<br /><br /></p>;
+              },
+              code({ className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || "");
+                return match ? (
+                  <SyntaxHighlighter language={match[1]} style={customTheme}>
+                    {String(children)}
+                  </SyntaxHighlighter>
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                );
+              },
+              table({ children, ...props }) {
+                return (
+                  <div className="overflow-x-auto my-6">
+                    <table className="min-w-full border border-zinc-700 text-left text-zinc-300" {...props}>
+                      {children}
+                    </table>
+                  </div>
+                );
+              },
+              thead({ children, ...props }) {
+                return <thead className="bg-zinc-900" {...props}>{children}</thead>;
+              },
+              tbody({ children, ...props }) {
+                return <tbody {...props}>{children}</tbody>;
+              },
+              tr({ children, ...props }) {
+                return <tr className="border-b border-zinc-700" {...props}>{children}</tr>;
+              },
+              th({ children, ...props }) {
+                return <th className="px-4 py-2 font-semibold" {...props}>{children}</th>;
+              },
+              td({ children, ...props }) {
+                return <td className="px-4 py-2" {...props}>{children}</td>;
+              },
+              ul({ children, ...props }) {
+                return <ul className="list-disc pl-6 pb-4 text-zinc-300" {...props}>{children}</ul>;
+              },
+              ol({ children, ...props }) {
+                return <ol className="list-decimal list-inside pl-6 pb-4 text-zinc-300" {...props}>{children}</ol>;
+              },
+              li({ children, ...props }) {
+                return <li className="mb-2 pl-1 list-item marker:text-zinc-400" {...props}>{children}</li>;
+              },
+            }}
+          >
+            {post.content}
+          </ReactMarkdown>
+        </div>
       </main>
     </div>
   );
 };
 
-export default Post;
+export default PostPage;

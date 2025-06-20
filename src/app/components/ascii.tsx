@@ -18,6 +18,7 @@ const Ascii = ({ className }: { className?: string }) => {
     >
       <div className="relative w-full aspect-square">
         <Image
+          blurDataURL="/Asset 4.svg"
           src="/Asset 4.svg"
           alt="Glowing SVG"
           fill

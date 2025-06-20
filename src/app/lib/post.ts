@@ -1,20 +1,17 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { remark } from "remark";
-import html from "remark-html";
-// Define a type for the post data
-type PostData = {
-  title?: string;
-  date?: string; // Assuming date is stored as a string in the frontmatter
-  [key: string]: any; // Allow other properties
-};
 
-// Define a type for the post including the content and slug
-type Post = {
+// Define a type for the post data
+export type Post = {
   slug: string;
+  title: string;
+  date: string;
+  description: string;
+  category?: string;
   content: string;
-} & PostData;
+  image?: string;
+};
 const postsDirectory = path.join(process.cwd(), "posts");
 
 export function getAllPosts() {
@@ -23,32 +20,34 @@ export function getAllPosts() {
     const filePath = path.join(postsDirectory, filename);
     const fileContents = fs.readFileSync(filePath, "utf8");
     const { data, content } = matter(fileContents);
-
     const slug = filename.replace(/\.md$/, ""); // Remove ".md"
-
     return {
       slug,
-      ...data, // Extract frontmatter (e.g., title, date)
+      title: data.title || "",
+      date: data.date || "",
+      description: data.description || "",
+      category: data.category || "",
+      ...data,
       content,
     };
   });
-
   return posts.sort(
-    (a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime()
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 }
 
-export async function getPostBySlug(slug: string) {
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  const fullPath = path.join(postsDirectory, `${slug.toLocaleLowerCase()}.md`);
+  if (!fs.existsSync(fullPath)) return null;
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
-
-  const processedContent = await remark().use(html).process(content);
-  const contentHtml = processedContent.toString();
-
   return {
     slug,
+    title: data.title || "",
+    date: data.date || "",
+    description: data.description || "",
+    category: data.category || "",
     ...data,
-    contentHtml, // Use this in the component
+    content,
   };
 }
