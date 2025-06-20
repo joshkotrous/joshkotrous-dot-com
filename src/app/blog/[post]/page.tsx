@@ -41,6 +41,9 @@ export async function generateMetadata({
   return {
     title: `Josh Kotrous | ${post.title}`,
     description: post.description,
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://joshkotrous.com"
+    ),
     openGraph: {
       title: post.title,
       description: post.description,
@@ -48,7 +51,7 @@ export async function generateMetadata({
       type: "article",
       images: post.image
         ? [{ url: post.image, width: 1200, height: 630, alt: post.title }]
-        : undefined,
+        : "./opengraph-image.png",
     },
     twitter: {
       card: "summary_large_image",
@@ -56,7 +59,7 @@ export async function generateMetadata({
       description: post.description,
       images: post.image
         ? [{ url: post.image, width: 1200, height: 630, alt: post.title }]
-        : undefined,
+        : "./twitter-image.png",
     },
   };
 }
@@ -104,7 +107,13 @@ const PostPage = async ({ params }: { params: { post: string } }) => {
             remarkPlugins={[remarkGfm]}
             components={{
               p({ ...props }) {
-                return <p className="text-zinc-300">{props.children}<br /><br /></p>;
+                return (
+                  <p className="text-zinc-300">
+                    {props.children}
+                    <br />
+                    <br />
+                  </p>
+                );
               },
               code({ className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || "");
@@ -121,35 +130,72 @@ const PostPage = async ({ params }: { params: { post: string } }) => {
               table({ children, ...props }) {
                 return (
                   <div className="overflow-x-auto my-6">
-                    <table className="min-w-full border border-zinc-700 text-left text-zinc-300" {...props}>
+                    <table
+                      className="min-w-full border border-zinc-700 text-left text-zinc-300"
+                      {...props}
+                    >
                       {children}
                     </table>
                   </div>
                 );
               },
               thead({ children, ...props }) {
-                return <thead className="bg-zinc-900" {...props}>{children}</thead>;
+                return (
+                  <thead className="bg-zinc-900" {...props}>
+                    {children}
+                  </thead>
+                );
               },
               tbody({ children, ...props }) {
                 return <tbody {...props}>{children}</tbody>;
               },
               tr({ children, ...props }) {
-                return <tr className="border-b border-zinc-700" {...props}>{children}</tr>;
+                return (
+                  <tr className="border-b border-zinc-700" {...props}>
+                    {children}
+                  </tr>
+                );
               },
               th({ children, ...props }) {
-                return <th className="px-4 py-2 font-semibold" {...props}>{children}</th>;
+                return (
+                  <th className="px-4 py-2 font-semibold" {...props}>
+                    {children}
+                  </th>
+                );
               },
               td({ children, ...props }) {
-                return <td className="px-4 py-2" {...props}>{children}</td>;
+                return (
+                  <td className="px-4 py-2" {...props}>
+                    {children}
+                  </td>
+                );
               },
               ul({ children, ...props }) {
-                return <ul className="list-disc pl-6 pb-4 text-zinc-300" {...props}>{children}</ul>;
+                return (
+                  <ul className="list-disc pl-6 pb-4 text-zinc-300" {...props}>
+                    {children}
+                  </ul>
+                );
               },
               ol({ children, ...props }) {
-                return <ol className="list-decimal list-inside pl-6 pb-4 text-zinc-300" {...props}>{children}</ol>;
+                return (
+                  <ol
+                    className="list-decimal list-inside pl-6 pb-4 text-zinc-300"
+                    {...props}
+                  >
+                    {children}
+                  </ol>
+                );
               },
               li({ children, ...props }) {
-                return <li className="mb-2 pl-1 list-item marker:text-zinc-400" {...props}>{children}</li>;
+                return (
+                  <li
+                    className="mb-2 pl-1 list-item marker:text-zinc-400"
+                    {...props}
+                  >
+                    {children}
+                  </li>
+                );
               },
             }}
           >
