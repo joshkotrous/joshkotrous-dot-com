@@ -24,6 +24,7 @@ const customTheme = {
   },
 };
 
+// app/blog/[post]/generateMetadata.ts
 export async function generateMetadata({
   params,
 }: {
@@ -38,42 +39,43 @@ export async function generateMetadata({
     };
   }
 
+  const imageUrl = post.image ?? "/images/default-image.png";
+
   return {
     title: `Josh Kotrous | ${post.title}`,
     description: post.description,
+
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://joshkotrous.com/blog/images/"
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://joshkotrous.com"
     ),
+
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://joshkotrous.com/blog/${params.post}`,
+      url: `/blog/${params.post}`,
       type: "article",
-      images: post.image
-        ? [
-            {
-              url: `${post.image}`,
-              width: 1200,
-              height: 630,
-              alt: post.title,
-            },
-          ]
-        : "./default-image.png",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
+
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: post.image
-        ? [
-            {
-              url: `${post.image}`,
-              width: 1200,
-              height: 630,
-              alt: post.title,
-            },
-          ]
-        : "./default-image.png",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
   };
 }
@@ -97,7 +99,7 @@ const PostPage = async ({ params }: { params: { post: string } }) => {
           </p>
           <div>
             <h1 className="leading-none">{post.title}</h1>
-            <p>{post.date}</p>
+            <p>{post.date.toLocaleString()}</p>
           </div>
           <p className="text-zinc-500 cursor-default">Share This Article</p>
           <div className="flex gap-2 text-2xl z-50">

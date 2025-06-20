@@ -1,14 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Post from "../blog/page";
 import Link from "next/link";
+import { Post } from "../lib/post";
 
-export interface Post {
-  slug: string;
-  content?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
 const categories = ["Latest", "Engineering Leadership", "Career"];
 
 const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
@@ -57,7 +51,7 @@ const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
                 </h3>
               </Link>
 
-              <p className="text-nowrap">{post.date}</p>
+              <p className="text-nowrap">{post.date.toString()}</p>
             </div>
             <div className="flex flex-col gap-2">
               <p className="text-zinc-400">{post.description}</p>
