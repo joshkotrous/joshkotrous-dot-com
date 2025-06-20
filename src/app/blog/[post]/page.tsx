@@ -51,7 +51,7 @@ export async function generateMetadata({
       type: "article",
       images: post.image
         ? [{ url: post.image, width: 1200, height: 630, alt: post.title }]
-        : "./opengraph-image.png",
+        : "./blog/opengraph-image.png",
     },
     twitter: {
       card: "summary_large_image",
@@ -59,7 +59,7 @@ export async function generateMetadata({
       description: post.description,
       images: post.image
         ? [{ url: post.image, width: 1200, height: 630, alt: post.title }]
-        : "./twitter-image.png",
+        : "./blog/twitter-image.png",
     },
   };
 }
