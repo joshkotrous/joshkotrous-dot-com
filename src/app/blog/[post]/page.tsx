@@ -39,7 +39,7 @@ export async function generateMetadata({
     };
   }
 
-  const imageUrl = post.image ?? "/images/default-image.png";
+  const imageUrl = post.image ?? "default-image.png";
 
   return {
     title: `Josh Kotrous | ${post.title}`,
@@ -55,7 +55,7 @@ export async function generateMetadata({
       type: "article",
       images: [
         {
-          url: imageUrl,
+          url: `/images/${imageUrl}`,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -69,7 +69,7 @@ export async function generateMetadata({
       description: post.description,
       images: [
         {
-          url: imageUrl,
+          url: `/images/${imageUrl}`,
           width: 1200,
           height: 630,
           alt: post.title,

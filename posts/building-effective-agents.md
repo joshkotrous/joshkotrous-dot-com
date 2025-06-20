@@ -3,7 +3,7 @@ title: Building Effective Agents
 date: 06-19-2025
 description: Covers key methods to create effective AI agents that can understand your data and take action
 category: Engineering
-image: /images/building-effective-agents.png
+image: building-effective-agents.png
 ---
 
 ## Introduction
