@@ -131,9 +131,9 @@ Several observability and tracing tools have risen to address LLM applications, 
 
 Finally, let’s discuss the glue that holds all these pieces together: prompt design for agents. Giving an agent access to tools is powerful, but the model must know *how* and *when* to use those tools. By default, an LLM won’t magically understand your custom tools – you need to engineer the prompt (usually the system message or an extended instruction) to teach the model about its toolset and the protocol for using them. A recommended practice is to include a dedicated **“Tool Usage Instructions”** section in your prompt. In this section, clearly enumerate each tool available, along with a brief description of what it does and examples of inputs it expects. Essentially, you are giving the model a *user manual* for its toolbox. For example, you might write in the system prompt:
 
-> *“You have access to the following tools:
+> _“You have access to the following tools:
 > (1) **Calculator** – for math calculations, expects a mathematical expression as input;
-> (2) **SearchEngine** – for web searches, expects a query string…”* and so on.
+> (2) **SearchEngine** – for web searches, expects a query string…”_
 
 By listing tools in a bullet format with their usage explained, you make it far more likely that the model will pick the right tool at the right time.
 
