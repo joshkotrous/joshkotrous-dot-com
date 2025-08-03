@@ -53,3 +53,37 @@ h3 {
     font-size: 24px;
   }
 }
+
+/* Dynamic bloom effect --------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  [data-bloom] {
+    position: relative; /* establish containing block for pseudo-element */
+  }
+
+  /* Ensure replaced/inline elements have a box for the pseudo-element */
+  img[data-bloom],
+  svg[data-bloom],
+  canvas[data-bloom],
+  video[data-bloom],
+  a[data-bloom],
+  span[data-bloom] {
+    display: inline-block;
+  }
+
+  [data-bloom]::after {
+    content: attr(data-bloom-text, "");
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    filter: blur(var(--bloom-blur, 6px))
+      brightness(var(--bloom-brightness, 1.1));
+    opacity: 0;
+    transition: opacity 250ms ease;
+    mix-blend-mode: screen; /* additive blending */
+  }
+
+  /* Active state toggled by JS */
+  [data-bloom-active]::after {
+    opacity: var(--bloom-opacity, 0.7);
+  }
+}

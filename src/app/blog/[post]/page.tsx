@@ -118,7 +118,7 @@ const PostPage = async ({ params }: { params: Promise<{ post: string }> }) => {
             </Link>
             <CopyToClipboard url={`https://joshkotrous.com/blog/${postSlug}`} />
           </div>
-          <div className="content">
+          <div className="content no-glow">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
