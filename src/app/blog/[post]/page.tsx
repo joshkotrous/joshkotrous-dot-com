@@ -28,10 +28,9 @@ const customTheme = {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ post: string }>;
+  params: { post: string };
 }): Promise<Metadata> {
-  const { post: postSlug } = await params;
-  const post: Post | null = await getPostBySlug(postSlug);
+  const post: Post | null = await getPostBySlug(params.post);
 
   if (!post) {
     return {
@@ -80,8 +79,9 @@ export async function generateMetadata({
   };
 }
 
-const PostPage = async ({ params }: { params: { post: string } }) => {
-  const post = await getPostBySlug(params.post);
+const PostPage = async ({ params }: { params: Promise<{ post: string }> }) => {
+  const { post: postSlug } = await params;
+  const post = await getPostBySlug(postSlug);
 
   if (!post) {
     return notFound();
@@ -104,20 +104,18 @@ const PostPage = async ({ params }: { params: { post: string } }) => {
           <p className="text-zinc-500 cursor-default">Share This Article</p>
           <div className="flex gap-2 text-2xl z-50">
             <Link
-              href={`https://www.linkedin.com/shareArticle?mini=true&url=https://joshkotrous.com/blog/${params.post}&title=${post.title}`}
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=https://joshkotrous.com/blog/${postSlug}&title=${post.title}`}
               target="_blank"
             >
               <FaLinkedin />
             </Link>
             <Link
-              href={`https://twitter.com/intent/tweet?url=https://joshkotrous.com/blog/${params.post}`}
+              href={`https://twitter.com/intent/tweet?url=https://joshkotrous.com/blog/${postSlug}`}
               target="_blank"
             >
               <FaXTwitter />
             </Link>
-            <CopyToClipboard
-              url={`https://joshkotrous.com/blog/${params.post}`}
-            />
+            <CopyToClipboard url={`https://joshkotrous.com/blog/${postSlug}`} />
           </div>
           <div className="content">
             <ReactMarkdown
