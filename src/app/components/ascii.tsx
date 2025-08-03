@@ -8,11 +8,7 @@ const Ascii = ({ className }: { className?: string }) => {
         relative 
         w-full
         h-full
-        before:absolute before:content-[''] 
-        before:inset-0 before:-z-10 
-        before:bg-[url('/Asset%201.svg')] 
-        before:bg-no-repeat before:bg-contain before:bg-center
-        before:blur-xl before:opacity-50
+
         ${className}
       `}
     >
@@ -31,3 +27,9 @@ const Ascii = ({ className }: { className?: string }) => {
 };
 
 export default Ascii;
+
+// before:absolute before:content-['']
+// before:inset-0 before:-z-10
+// before:bg-[url('/Asset%201.svg')]
+// before:bg-no-repeat before:bg-contain before:bg-center
+// before:blur-xl before:opacity-50
