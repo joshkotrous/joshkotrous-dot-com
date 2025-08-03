@@ -28,9 +28,10 @@ const customTheme = {
 export async function generateMetadata({
   params,
 }: {
-  params: { post: string };
+  params: Promise<{ post: string }>;
 }): Promise<Metadata> {
-  const post: Post | null = await getPostBySlug(params.post);
+  const { post: postSlug } = await params;
+  const post: Post | null = await getPostBySlug(postSlug);
 
   if (!post) {
     return {
