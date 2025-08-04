@@ -17,15 +17,61 @@ type Commands = {
   [key: string]: Command;
 };
 
+// Convert hex color to hue value (0-360)
+const hexToHue = (hex: string): number => {
+  // Remove the # if present
+  hex = hex.replace("#", "");
+
+  // Convert hex to RGB
+  const r = parseInt(hex.substring(0, 2), 16) / 255;
+  const g = parseInt(hex.substring(2, 4), 16) / 255;
+  const b = parseInt(hex.substring(4, 6), 16) / 255;
+
+  // Find min and max values
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+
+  let h = 0;
+
+  if (max === min) {
+    h = 0; // achromatic
+  } else {
+    const d = max - min;
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+    }
+    h *= 60;
+  }
+
+  return h;
+};
+
 export default function Terminal() {
   const [input, setInput] = useState("");
 
+  const { theme } = useTheme();
   const { handleThemeChange } = useTheme();
+  const [currentHue, setCurrentHue] = useState(0);
 
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const fireworksRef = useRef<HTMLDivElement>(null);
-  const fireworksInstanceRef = useRef<Fireworks | null>(null);
+  const [showFireworks, setShowFireworks] = useState(false);
+
+  // Update hue when theme changes
+  useEffect(() => {
+    if (theme?.config.primary) {
+      setCurrentHue(hexToHue(theme.config.primary));
+    }
+  }, [theme?.config.primary]);
 
   const commands: Commands = {
     help: {
@@ -88,7 +134,7 @@ export default function Terminal() {
           origin: { y: 0.7 },
           spread: 90,
           startVelocity: 45,
-          colors: ["#22c55e"], // bg-primary
+          colors: [theme?.config.primary], // bg-primary
         });
         return "";
       },
@@ -98,60 +144,38 @@ export default function Terminal() {
       execute: async () => {
         if (!fireworksRef.current) return "";
 
-        // Create new fireworks instance if it doesn't exist
-        if (!fireworksInstanceRef.current) {
-          fireworksInstanceRef.current = new Fireworks(fireworksRef.current, {
-            hue: {
-              min: 120, // Green hue
-              max: 140,
-            },
-            delay: {
-              min: 15,
-              max: 30,
-            },
-            rocketsPoint: {
-              min: 30,
-              max: 70,
-            },
-            opacity: 0.8,
-            acceleration: 1.05,
-            friction: 0.97,
-            gravity: 2,
-            particles: 90,
-            explosion: 6,
-            autoresize: true,
-            brightness: {
-              min: 50,
-              max: 80,
-            },
+        // Show container via state
+        setShowFireworks(true);
 
-            sound: {
-              enabled: false,
-            },
-            mouse: {
-              click: false,
-              move: false,
-              max: 1,
-            },
-          });
-        }
+        // Clear any previous canvases inside the container
+        fireworksRef.current.innerHTML = "";
 
-        // Show container
-        if (fireworksRef.current) {
-          fireworksRef.current.style.display = "block";
-        }
+        // Create and start fireworks
+        const fw = new Fireworks(fireworksRef.current, {
+          hue: {
+            min: Math.max(0, currentHue - 10),
+            max: Math.min(360, currentHue + 10),
+          },
+          delay: { min: 15, max: 30 },
+          rocketsPoint: { min: 30, max: 70 },
+          opacity: 0.8,
+          acceleration: 1.05,
+          friction: 0.97,
+          gravity: 2,
+          particles: 90,
+          explosion: 6,
+          autoresize: true,
+          brightness: { min: 50, max: 80 },
+          sound: { enabled: false },
+          mouse: { click: false, move: false, max: 1 },
+        });
 
-        // Start fireworks
-        fireworksInstanceRef.current.start();
+        fw.start();
 
-        // Run for 5 seconds
+        // Run for 5 seconds then cleanup
         setTimeout(() => {
-          if (fireworksInstanceRef.current) {
-            fireworksInstanceRef.current.stop();
-            if (fireworksRef.current) {
-              fireworksRef.current.style.display = "none";
-            }
-          }
+          fw.stop();
+          setShowFireworks(false);
         }, 5000);
 
         return "";
@@ -172,7 +196,7 @@ export default function Terminal() {
 
   // Common confetti settings to match the green glow theme
   const confettiDefaults = {
-    colors: ["#22c55e"], // bg-primary
+    colors: [theme?.config.primary], // bg-primary
     ticks: 100,
     particleCount: 100,
     scalar: 1.2,
@@ -196,12 +220,12 @@ export default function Terminal() {
   }, [lines]);
 
   const handleCommand = async (cmd: string) => {
-    const trimmedCmd = cmd.trim();
+    const trimmedCmd = cmd.trim().toLocaleLowerCase();
 
     // Always add the command line, even if empty
     setLines((prev) => [
       ...prev,
-      { content: `$ ${cmd}`, isCommand: true }, // Use original cmd to preserve spaces
+      { content: `$ ${trimmedCmd}`, isCommand: true }, // Use original cmd to preserve spaces
     ]);
 
     // Only process command if it's not empty
@@ -257,15 +281,6 @@ export default function Terminal() {
     inputRef.current?.focus();
   }, []);
 
-  // Cleanup fireworks on unmount
-  useEffect(() => {
-    return () => {
-      if (fireworksInstanceRef.current) {
-        fireworksInstanceRef.current.stop();
-      }
-    };
-  }, []);
-
   return (
     <>
       <div
@@ -278,7 +293,7 @@ export default function Terminal() {
           height: "100%",
           pointerEvents: "none",
           zIndex: 9999,
-          display: "none",
+          display: showFireworks ? "block" : "none",
         }}
       />
       <div className="relative size-full text-sm">
