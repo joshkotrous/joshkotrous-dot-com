@@ -2,16 +2,27 @@
 
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useMemo } from "react";
-import { ShaderMaterial, Vector2 } from "three";
+import { ShaderMaterial, Vector2, Vector3 } from "three";
 
-function TFTShader() {
+interface TFTShaderProps {
+  color: "green" | "amber";
+}
+
+function TFTShader({ color }: TFTShaderProps) {
   const materialRef = useRef<ShaderMaterial>(null);
 
   const shaderMaterial = useMemo(() => {
+    // Get color values based on the prop
+    const colorValues =
+      color === "amber"
+        ? new Vector3(0.996, 0.604, 0.0) // #fe9a00 amber
+        : new Vector3(0.1, 0.8, 0.3); // green terminal color
+
     // TFT shader converted from ShaderToy format to Three.js
     const fragmentShader = `
       uniform float iTime;
       uniform vec2 iResolution;
+      uniform vec3 terminalColor;
       varying vec2 vUv;
       
       /** Size of TFT "pixels" */
@@ -34,7 +45,7 @@ function TFTShader() {
           
           // Create a base pattern since we don't have iChannel0
           // Generate a simple terminal-like pattern
-          vec3 color = vec3(0.1, 0.8, 0.3); // Green terminal color
+          vec3 color = terminalColor;
           
           // Add some content patterns
           float textPattern = sin(uv.y * 40.0) * 0.5 + 0.5;
@@ -62,13 +73,14 @@ function TFTShader() {
       uniforms: {
         iTime: { value: 0 },
         iResolution: { value: new Vector2(1920, 1080) },
+        terminalColor: { value: colorValues },
       },
       vertexShader,
       fragmentShader,
       transparent: true,
       depthWrite: false,
     });
-  }, []);
+  }, [color]);
 
   useFrame(({ clock }) => {
     if (materialRef.current) {
@@ -88,14 +100,18 @@ function TFTShader() {
   );
 }
 
-export default function TFTOverlay() {
+interface TFTOverlayProps {
+  color?: "green" | "amber";
+}
+
+export default function TFTOverlay({ color = "amber" }: TFTOverlayProps) {
   return (
     <div
       className="fixed inset-0 pointer-events-none z-50"
       style={{
         // CSS blend modes for combining with DOM content
         mixBlendMode: "color-dodge",
-        opacity: 0.175,
+        opacity: 0.1,
       }}
     >
       <Canvas
@@ -108,7 +124,7 @@ export default function TFTOverlay() {
           height: "100%",
         }}
       >
-        <TFTShader />
+        <TFTShader color={color} />
       </Canvas>
     </div>
   );

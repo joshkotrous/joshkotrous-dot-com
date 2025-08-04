@@ -78,7 +78,7 @@ export default function Terminal() {
           origin: { y: 0.7 },
           spread: 90,
           startVelocity: 45,
-          colors: ["#22c55e"], // bg-green-500
+          colors: ["#22c55e"], // bg-primary
         });
         return "";
       },
@@ -162,7 +162,7 @@ export default function Terminal() {
 
   // Common confetti settings to match the green glow theme
   const confettiDefaults = {
-    colors: ["#22c55e"], // bg-green-500
+    colors: ["#22c55e"], // bg-primary
     ticks: 100,
     particleCount: 100,
     scalar: 1.2,
@@ -277,7 +277,7 @@ export default function Terminal() {
           className="absolute inset-0 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent"
           onClick={() => inputRef.current?.focus()}
         >
-          <div className="sticky top-0 border-b border-green-500 p-1 px-2 text-xs bg-background z-50 flex justify-between">
+          <div className="sticky top-0 border-b border-primary p-1 px-2 text-xs bg-background z-50 flex justify-between">
             <p>terminal</p>
             <Clock />
           </div>
@@ -287,14 +287,14 @@ export default function Terminal() {
               <p
                 key={i}
                 className={`whitespace-pre-wrap break-words ${
-                  line.isCommand ? "text-green-500" : ""
+                  line.isCommand ? "text-primary" : ""
                 }`}
               >
                 {line.content}
               </p>
             ))}
             <div className="flex items-start">
-              <span className="text-green-500 mr-2">$</span>
+              <span className="text-primary mr-2">$</span>
               <input
                 ref={inputRef}
                 type="text"

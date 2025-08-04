@@ -29,7 +29,7 @@ const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
           {categories.map((item) => (
             <li
               key={item}
-              className={`cursor-pointer bg-[var(--background)] hover:bg-green-400/25 p-1 transition-all ${
+              className={`cursor-pointer bg-(--background) hover:bg-green-400/25 p-1 transition-all ${
                 item === category && "bg-green-400/25"
               }`}
               onClick={() => {

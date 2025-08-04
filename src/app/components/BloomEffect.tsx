@@ -95,11 +95,11 @@ export default function BloomEffect() {
 
     document.head.appendChild(style);
 
-    // Set the glow color CSS variable
-    document.documentElement.style.setProperty(
-      "--glow-color",
-      "rgb(34 197 94)"
-    );
+    // // Set the glow color CSS variable
+    // document.documentElement.style.setProperty(
+    //   "--glow-color",
+    //   "rgb(34 197 94)"
+    // );
 
     return () => {
       const existingStyle = document.getElementById("bloom-effect");

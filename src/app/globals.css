@@ -1,26 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap");
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap")
+layer(base);
 
-@keyframes ellipsis {
-  0% {
-    content: "";
-  }
-  25% {
-    content: ".";
-  }
-  50% {
-    content: "..";
-  }
-  75% {
-    content: "...";
-  }
-  100% {
-    content: "";
+@layer base {
+  @keyframes ellipsis {
+    0% {
+      content: "";
+    }
+    25% {
+      content: ".";
+    }
+    50% {
+      content: "..";
+    }
+    75% {
+      content: "...";
+    }
+    100% {
+      content: "";
+    }
   }
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 ::-webkit-scrollbar {
   display: none;
@@ -33,16 +33,29 @@
   font-style: normal;
 }
 
-:root {
-  --background: rgb(12, 12, 12);
-  scrollbar-width: 0;
+@theme {
+  --font-geist-mono: "Geist Mono", monospace;
+  --color-background: rgb(12, 12, 12);
+  --color-primary: #fe9a00;
+  --color-border: #fe9a00;
+  --glow-color: #fe9a00;
 }
 
 body {
-  background: var(--background);
+  background: var(--color-background);
   font-family: "Geist Mono", monospace;
   /* Ensure bloom overlay doesn't interfere with content */
   overflow-x: hidden;
+}
+
+p,
+a,
+img,
+h1,
+h2,
+h3,
+span {
+  color: var(--color-primary);
 }
 
 h1 {

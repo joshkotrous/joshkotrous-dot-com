@@ -49,9 +49,9 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
-        className="border size-full border-green-500"
+        className="border size-full border-primary"
       >
-        <div className="border-b border-green-500 h-96">
+        <div className="border-b border-primary h-96">
           <Terminal />
         </div>
         <HomepageTabs posts={posts} />
@@ -65,7 +65,7 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
       initial={{ width: "20rem", height: "10rem" }}
       animate={{ width: "100%", height: "100%" }}
       transition={{ duration: 0.5, delay: 2.5 }}
-      className="border size-full border-green-500"
+      className="border size-full border-primary"
     >
       <AnimatePresence>{!showContent && <Loading />}</AnimatePresence>
 
@@ -78,7 +78,7 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
             transition={{ duration: 0.5, delay: 1 }}
             className="w-full h-full"
           >
-            <div className="border-b border-green-500 h-96">
+            <div className="border-b border-primary h-96">
               <Terminal />
             </div>
             <HomepageTabs posts={posts} />
@@ -96,7 +96,7 @@ function Loading() {
       progress: 10,
       message: (
         <p className="flex items-center gap-2">
-          <Loader className="size-3.5 animate-spin text-green-500" />
+          <Loader className="size-3.5 animate-spin text-primary" />
           Initializing...
         </p>
       ),
@@ -106,7 +106,7 @@ function Loading() {
       progress: 50,
       message: (
         <p className="flex items-center gap-2">
-          <Loader className="size-3.5 animate-spin text-green-500" />
+          <Loader className="size-3.5 animate-spin text-primary" />
           Spinning up server...
         </p>
       ),
@@ -116,7 +116,7 @@ function Loading() {
       progress: 75,
       message: (
         <p className="flex items-center gap-2">
-          <Loader className="size-3.5 animate-spin text-green-500" />
+          <Loader className="size-3.5 animate-spin text-primary" />
           Loading terminal...
         </p>
       ),
@@ -151,11 +151,11 @@ function Loading() {
       transition={{ duration: 0.5 }}
       className="text-sm size-full flex flex-col"
     >
-      <div className="flex w-full border-b border-green-500">
-        <div className="w-full border-green-500 p-2 text-xs px-4 flex justify-center border-r">
+      <div className="flex w-full border-b border-primary">
+        <div className="w-full border-primary p-2 text-xs px-4 flex justify-center border-r">
           <p>kotrous.dev</p>
         </div>
-        <div className="w-fit border-green-500 p-2 text-xs px-4 flex justify-center">
+        <div className="w-fit border-primary p-2 text-xs px-4 flex justify-center">
           <p>0.0.0</p>
         </div>
       </div>
@@ -178,10 +178,10 @@ function ProgressBar({
   className?: string;
 }) {
   return (
-    <div className={`w-full h-1 bg-green-500/20 overflow-hidden ${className}`}>
+    <div className={`w-full h-1 bg-primary/20 overflow-hidden ${className}`}>
       <div
         style={{ width: `${Math.min(Math.max(progress, 0), 100)}%` }}
-        className="h-full bg-green-500 transition-all duration-500 ease-in-out"
+        className="h-full bg-primary transition-all duration-500 ease-in-out"
       />
     </div>
   );

@@ -17,8 +17,8 @@ export default function HomepageTabs({ posts }: { posts: Post[] }) {
       <div className="flex text-xs text-nowrap w-full">
         <div
           className={cn(
-            "border border-t-0 border-l-0 border-green-500 p-2 px-8 hover:bg-green-500/10 cursor-pointer",
-            activeTab === "about" && "bg-green-500/10"
+            "border border-t-0 border-l-0 border-primary p-2 px-8 hover:bg-primary/10 cursor-pointer",
+            activeTab === "about" && "bg-primary/10"
           )}
           onClick={() => setActiveTab("about")}
         >
@@ -26,8 +26,8 @@ export default function HomepageTabs({ posts }: { posts: Post[] }) {
         </div>
         <div
           className={cn(
-            "border border-t-0 border-l-0 border-green-500 p-2 px-8 hover:bg-green-500/10 cursor-pointer",
-            activeTab === "latest-posts" && "bg-green-500/10"
+            "border border-t-0 border-l-0 border-primary p-2 px-8 hover:bg-primary/10 cursor-pointer",
+            activeTab === "latest-posts" && "bg-primary/10"
           )}
           onClick={() => setActiveTab("latest-posts")}
         >
@@ -35,14 +35,14 @@ export default function HomepageTabs({ posts }: { posts: Post[] }) {
         </div>
         <div
           className={cn(
-            "border border-t-0 border-l-0 border-green-500 p-2 px-8 hover:bg-green-500/10 cursor-pointer",
-            activeTab === "projects" && "bg-green-500/10"
+            "border border-t-0 border-l-0 border-primary p-2 px-8 hover:bg-primary/10 cursor-pointer",
+            activeTab === "projects" && "bg-primary/10"
           )}
           onClick={() => setActiveTab("projects")}
         >
           <p>Projects</p>
         </div>
-        <div className="border border-t-0 border-l-0 border-r-0 border-green-500 p-2 px-8 flex-1"></div>
+        <div className="border border-t-0 border-l-0 border-r-0 border-primary p-2 px-8 flex-1"></div>
       </div>
       <div className="p-4">
         {activeTab === "about" && <About />}
@@ -130,7 +130,7 @@ function Projects() {
           target="_blank"
           href={i.url}
           key={i.name}
-          className="border border-green-500 px-3 py-2 space-y-2 hover:bg-green-500/10 cursor-pointer transition-all"
+          className="border border-primary px-3 py-2 space-y-2 hover:bg-primary/10 cursor-pointer transition-all"
         >
           <p>{i.name}</p>
           <p className="text-xs">{i.description}</p>
