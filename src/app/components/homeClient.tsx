@@ -6,15 +6,60 @@ import { Post } from "../lib/post";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Check, Loader } from "lucide-react";
+import Cookies from "js-cookie";
+import { Loading as LoadingComponent } from "./loading";
+
 export default function HomeClient({ posts }: { posts: Post[] }) {
   const [showContent, setShowContent] = useState(false);
+  const [hasCheckedCookie, setHasCheckedCookie] = useState(false);
+  const [skipAnimation, setSkipAnimation] = useState(false);
 
+  // Check cookie after hydration
   useEffect(() => {
-    setTimeout(() => {
-      setShowContent(true);
-    }, 2000);
+    const hasVisited = Cookies.get("hasVisitedHome") === "true";
+    setSkipAnimation(hasVisited);
+    setHasCheckedCookie(true);
   }, []);
 
+  useEffect(() => {
+    if (!skipAnimation) {
+      const timer = setTimeout(() => {
+        setShowContent(true);
+        // Set cookie that expires in 30 minutes
+        Cookies.set("hasVisitedHome", "true", {
+          expires: new Date(new Date().getTime() + 30 * 60 * 1000),
+          sameSite: "strict",
+        });
+      }, 2300); // Adjusted to account for loading states total duration
+
+      return () => clearTimeout(timer);
+    }
+  }, [skipAnimation]);
+
+  // Don't render anything until we've checked the cookie
+  if (!hasCheckedCookie) {
+    return <LoadingComponent />;
+  }
+
+  // If already visited, render content immediately
+  if (skipAnimation) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        className="border size-full border-green-500"
+      >
+        <div className="border-b border-green-500 h-56">
+          <Terminal />
+        </div>
+        <HomepageTabs posts={posts} />
+      </motion.div>
+    );
+  }
+
+  // First visit - show animation
   return (
     <motion.div
       initial={{ width: "20rem", height: "10rem" }}
