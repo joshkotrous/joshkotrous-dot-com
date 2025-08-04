@@ -10,6 +10,8 @@ export const ThemeContext = createContext({
 
 type Theme = {
   name: string;
+  label: string;
+  labelColor: string;
   config: {
     primary: string;
     border: string;
@@ -19,7 +21,7 @@ type Theme = {
   };
 };
 
-export const themes = [
+export const themes: Theme[] = [
   {
     name: "green",
     label: "Green",
@@ -65,6 +67,7 @@ export const themes = [
       border: "#3b82f6",
       background: "#121212",
       text: "#3b82f6",
+      glow: "#3b82f6",
     },
   },
   {
@@ -87,6 +90,8 @@ export const themes = [
       primary: "#06b6d4",
       border: "#06b6d4",
       background: "#121212",
+      text: "#06b6d4",
+      glow: "#06b6d4",
     },
   },
   {
