@@ -3,20 +3,26 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useMemo } from "react";
 import { ShaderMaterial, Vector2, Vector3 } from "three";
+import { useTheme } from "../themeProvider";
 
-interface TFTShaderProps {
-  color: "green" | "amber";
+// Helper function to convert hex color to Vector3
+function hexToVector3(hex: string): Vector3 {
+  const color = parseInt(hex.replace("#", ""), 16);
+  const r = ((color >> 16) & 255) / 255;
+  const g = ((color >> 8) & 255) / 255;
+  const b = (color & 255) / 255;
+  return new Vector3(r, g, b);
 }
 
-function TFTShader({ color }: TFTShaderProps) {
+function TFTShader() {
   const materialRef = useRef<ShaderMaterial>(null);
+  const { theme } = useTheme();
 
   const shaderMaterial = useMemo(() => {
-    // Get color values based on the prop
-    const colorValues =
-      color === "amber"
-        ? new Vector3(0.996, 0.604, 0.0) // #fe9a00 amber
-        : new Vector3(0.1, 0.8, 0.3); // green terminal color
+    // Get color values from theme context
+    const colorValues = theme
+      ? hexToVector3(theme.config.primary)
+      : new Vector3(0.996, 0.604, 0.0); // fallback to amber
 
     // TFT shader converted from ShaderToy format to Three.js
     const fragmentShader = `
@@ -80,7 +86,7 @@ function TFTShader({ color }: TFTShaderProps) {
       transparent: true,
       depthWrite: false,
     });
-  }, [color]);
+  }, [theme]);
 
   useFrame(({ clock }) => {
     if (materialRef.current) {
@@ -100,11 +106,7 @@ function TFTShader({ color }: TFTShaderProps) {
   );
 }
 
-interface TFTOverlayProps {
-  color?: "green" | "amber";
-}
-
-export default function TFTOverlay({ color = "amber" }: TFTOverlayProps) {
+export default function TFTOverlay() {
   return (
     <div
       className="fixed inset-0 pointer-events-none z-50"
@@ -124,7 +126,7 @@ export default function TFTOverlay({ color = "amber" }: TFTOverlayProps) {
           height: "100%",
         }}
       >
-        <TFTShader color={color} />
+        <TFTShader />
       </Canvas>
     </div>
   );

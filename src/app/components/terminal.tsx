@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import confetti from "canvas-confetti";
 import { Fireworks } from "fireworks-js";
+import { useTheme } from "../themeProvider";
 interface TerminalLine {
   content: string;
   isCommand?: boolean;
@@ -18,6 +19,9 @@ type Commands = {
 
 export default function Terminal() {
   const [input, setInput] = useState("");
+
+  const { handleThemeChange } = useTheme();
+
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const fireworksRef = useRef<HTMLDivElement>(null);
@@ -31,6 +35,13 @@ export default function Terminal() {
           .map(([cmd, info]) => `  ${cmd.padEnd(15)} - ${info.description}`)
           .join("\n");
         return `Available commands:\n${commandList}`;
+      },
+    },
+    "set-theme": {
+      description: "Change the theme",
+      execute: (args: string = "") => {
+        handleThemeChange(args as "green" | "amber");
+        return `Theme changed to ${args}`;
       },
     },
     github: {
@@ -69,7 +80,6 @@ export default function Terminal() {
         return "";
       },
     },
-
     confetti: {
       description: "Celebrate with confetti!",
       execute: () => {
@@ -301,7 +311,7 @@ export default function Terminal() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="flex-1 bg-transparent outline-none font-mono"
+                className="flex-1 bg-transparent outline-none font-mono text-primary"
                 autoFocus
               />
             </div>

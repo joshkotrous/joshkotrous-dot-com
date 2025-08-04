@@ -6,6 +6,7 @@ import ColoredNoiseOverlay from "./components/ColoredNoiseOverlay";
 import BloomEffect from "./components/BloomEffect";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { ThemeProvider } from "./themeProvider";
 
 export const metadata: Metadata = {
   title: "Josh Kotrous",
@@ -22,16 +23,18 @@ export default async function RootLayout({
       <body
         className={`antialiased relative h-screen w-screen overflow-hidden transition-all`}
       >
-        <BloomEffect />
+        <ThemeProvider>
+          <BloomEffect />
 
-        <ColoredNoiseOverlay />
-        {/* <MonochromeNoiseOverlay /> */}
-        <TFTOverlay />
-        <div className="relative z-10 overflow-auto size-full flex flex-col">
-          <Navigation />
-          <div className="p-4 pt-0 size-full">{children}</div>
-        </div>
-        <Analytics />
+          <ColoredNoiseOverlay />
+          {/* <MonochromeNoiseOverlay /> */}
+          <TFTOverlay />
+          <div className="relative z-10 overflow-auto size-full flex flex-col">
+            <Navigation />
+            <div className="p-4 pt-0 size-full">{children}</div>
+          </div>
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

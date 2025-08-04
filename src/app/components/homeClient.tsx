@@ -41,7 +41,7 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
     return <LoadingComponent />;
   }
 
-  // If already visited, render content immediately
+  // // If already visited, render content immediately
   if (skipAnimation) {
     return (
       <motion.div
@@ -65,7 +65,7 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
       initial={{ width: "20rem", height: "10rem" }}
       animate={{ width: "100%", height: "100%" }}
       transition={{ duration: 0.5, delay: 2.5 }}
-      className="border size-full border-primary"
+      className="relative border size-full border-primary"
     >
       <AnimatePresence>{!showContent && <Loading />}</AnimatePresence>
 
@@ -149,9 +149,9 @@ function Loading() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="text-sm size-full flex flex-col"
+      className="text-sm flex flex-col absolute inset-0"
     >
-      <div className="flex w-full border-b border-primary">
+      <div className="flex w-full h-fit border-b border-primary">
         <div className="w-full border-primary p-2 text-xs px-4 flex justify-center border-r">
           <p>kotrous.dev</p>
         </div>
@@ -160,7 +160,7 @@ function Loading() {
         </div>
       </div>
 
-      <div className="p-4 size-full flex flex-col items-center justify-center gap-4 ">
+      <div className="p-4 flex-1 flex flex-col items-center justify-center gap-4">
         {states[currentStateIndex].message}
         <div className="w-64">
           <ProgressBar progress={states[currentStateIndex].progress} />

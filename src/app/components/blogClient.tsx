@@ -29,8 +29,8 @@ const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
           {categories.map((item) => (
             <li
               key={item}
-              className={`cursor-pointer bg-(--background) hover:bg-green-400/25 p-1 transition-all ${
-                item === category && "bg-green-400/25"
+              className={`text-primary cursor-pointer bg-primary/10 hover:bg-primary/25 p-1 transition-all ${
+                item === category && "bg-primary/25"
               }`}
               onClick={() => {
                 setCategory(item);
@@ -55,7 +55,7 @@ const BlogClient: React.FC<{ posts: Post[] }> = ({ posts }) => {
             </div>
             <div className="flex flex-col gap-2">
               <p className="text-zinc-400 no-glow">{post.description}</p>
-              <div className="bg-green-400/25 w-fit p-1 text-sm ">
+              <div className="bg-primary/25 text-primary w-fit p-1 text-sm ">
                 {post.category}
               </div>
             </div>

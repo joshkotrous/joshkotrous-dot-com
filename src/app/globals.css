@@ -36,10 +36,14 @@ layer(base);
 @theme {
   --font-geist-mono: "Geist Mono", monospace;
   --color-background: rgb(12, 12, 12);
-  --color-primary: #fe9a00;
-  --color-border: #fe9a00;
-  --glow-color: #fe9a00;
+  --color-primary: #3f3f46;
+  --color-border: #3f3f46;
+  --glow-color: #3f3f46;
 }
+/* 
+--color-primary: #fe9a00;
+--color-border: #fe9a00;
+--glow-color: #fe9a00; */
 
 body {
   background: var(--color-background);
