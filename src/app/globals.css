@@ -39,7 +39,6 @@
 }
 
 body {
-  @apply text-green-400;
   background: var(--background);
   font-family: "Geist Mono", monospace;
   /* Ensure bloom overlay doesn't interfere with content */
