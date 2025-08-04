@@ -95,7 +95,7 @@ export default function TFTOverlay() {
       style={{
         // CSS blend modes for combining with DOM content
         mixBlendMode: "color-dodge",
-        opacity: 0.1,
+        opacity: 0.175,
       }}
     >
       <Canvas

@@ -33,13 +33,43 @@ export default function Terminal() {
         return `Available commands:\n${commandList}`;
       },
     },
-    clear: {
-      description: "Clear the terminal",
+    github: {
+      description: "Open GitHub profile",
       execute: () => {
-        setLines([]);
+        if (window !== undefined) {
+          window.open("https://github.com/joshkotrous", "_blank");
+        }
         return "";
       },
     },
+    linkedin: {
+      description: "Open LinkedIn profile",
+      execute: () => {
+        if (window !== undefined) {
+          window.open("https://www.linkedin.com/in/joshkotrous/", "_blank");
+        }
+        return "";
+      },
+    },
+    email: {
+      description: "Email me!",
+      execute: () => {
+        if (window !== undefined) {
+          window.location.href = "mailto:josh@kotrous.dev";
+        }
+        return "";
+      },
+    },
+    resume: {
+      description: "View my resume",
+      execute: () => {
+        if (window !== undefined) {
+          window.open("/resume.pdf", "_blank");
+        }
+        return "";
+      },
+    },
+
     confetti: {
       description: "Celebrate with confetti!",
       execute: () => {
@@ -121,9 +151,12 @@ export default function Terminal() {
       description: "Echo back your text",
       execute: (args: string = "") => args || "Echo what?",
     },
-    date: {
-      description: "Display current date and time",
-      execute: () => new Date().toLocaleString(),
+    clear: {
+      description: "Clear the terminal",
+      execute: () => {
+        setLines([]);
+        return "";
+      },
     },
   };
 

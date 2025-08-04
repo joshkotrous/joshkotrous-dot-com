@@ -151,7 +151,7 @@ function ColoredNoiseShader() {
 export default function ColoredNoiseOverlay() {
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-20"
+      className="fixed inset-0 pointer-events-none z-50"
       style={{
         // CSS blend modes for combining with DOM content
         mixBlendMode: "color-dodge",

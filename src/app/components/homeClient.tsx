@@ -51,7 +51,7 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
         transition={{ duration: 0.25 }}
         className="border size-full border-green-500"
       >
-        <div className="border-b border-green-500 h-56">
+        <div className="border-b border-green-500 h-96">
           <Terminal />
         </div>
         <HomepageTabs posts={posts} />
@@ -78,7 +78,7 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
             transition={{ duration: 0.5, delay: 1 }}
             className="w-full h-full"
           >
-            <div className="border-b border-green-500 h-56">
+            <div className="border-b border-green-500 h-96">
               <Terminal />
             </div>
             <HomepageTabs posts={posts} />
