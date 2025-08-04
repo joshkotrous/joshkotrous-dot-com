@@ -1,7 +1,17 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { useTheme } from "../themeProvider";
+import { themes, useTheme } from "../themeProvider";
+import { SquareTerminal } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const Navigation = () => {
   const { theme } = useTheme();
@@ -27,7 +37,8 @@ const Navigation = () => {
           </Link>
         </span>
       </div>
-      <ul className="flex gap-2">
+      <ul className="flex gap-2 items-center">
+        <ThemeDropdown />
         <Link href="/">
           <li className="hover:underline cursor-pointer bloom-interactive">
             Home
@@ -54,5 +65,36 @@ const Navigation = () => {
     </div>
   );
 };
+
+function ThemeDropdown() {
+  const { handleThemeChange } = useTheme();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <SquareTerminal className="text-primary size-4" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <p>Change Theme</p>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            {themes.map((option) => (
+              <DropdownMenuItem
+                onClick={() =>
+                  handleThemeChange(option.name as "green" | "amber" | "purple")
+                }
+                key={option.name}
+              >
+                <p className={option.labelColor}>{option.label}</p>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 export default Navigation;

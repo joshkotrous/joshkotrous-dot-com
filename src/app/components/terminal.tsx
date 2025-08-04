@@ -292,7 +292,7 @@ export default function Terminal() {
             <Clock />
           </div>
 
-          <div className="space-y-1 font-mono p-2">
+          <div className="space-y-1 font-mono p-2 ">
             {lines.map((line, i) => (
               <p
                 key={i}

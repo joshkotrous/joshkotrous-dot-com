@@ -46,8 +46,8 @@ export default function BloomEffect() {
       [class*="image"]:not(.no-glow):not(.no-glow *),
       [class*="Image"]:not(.no-glow):not(.no-glow *) {
         filter: 
-          drop-shadow(0 0 1px currentColor)
-          drop-shadow(0 0 2px currentColor)
+          drop-shadow(0 0 0.5px currentColor)
+          drop-shadow(0 0 0.5px currentColor)
           brightness(1.05);
         transition: filter 0.2s ease;
       }
@@ -95,11 +95,11 @@ export default function BloomEffect() {
 
     document.head.appendChild(style);
 
-    // // Set the glow color CSS variable
-    // document.documentElement.style.setProperty(
-    //   "--glow-color",
-    //   "rgb(34 197 94)"
-    // );
+    // Set the glow color CSS variable
+    document.documentElement.style.setProperty(
+      "--glow-color",
+      "rgb(34 197 94)"
+    );
 
     return () => {
       const existingStyle = document.getElementById("bloom-effect");
