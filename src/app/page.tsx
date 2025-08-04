@@ -1,16 +1,11 @@
-import Link from "next/link";
-import Ascii from "./components/ascii";
-import { FaLinkedin, FaXTwitter } from "react-icons/fa6";
-import { IoLogoGithub } from "react-icons/io";
-import Terminal from "./components/terminal";
-import HomepageTabs from "./components/homepageTabs";
 import { getAllPosts } from "./lib/post";
+import HomeClient from "./components/homeClient";
 
-export default function Home() {
+export default async function Home() {
   const posts = getAllPosts();
 
   return (
-    <main className="size-full">
+    <main className="size-full flex items-center justify-center">
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:w-fit max-w-3xl">
           <div className="aspect-square">
             <Ascii />
@@ -66,12 +61,8 @@ export default function Home() {
             </div>
           </div>
         </div> */}
-      <div className="border size-full border-green-500">
-        <div className="border-b border-green-500  h-56">
-          <Terminal />
-        </div>
-        <HomepageTabs posts={posts} />
-      </div>
+
+      <HomeClient posts={posts} />
     </main>
   );
 }

@@ -17,6 +17,7 @@
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "fireworks-js": "^2.10.8",
+    "framer-motion": "^12.23.12",
     "fs": "^0.0.1-security",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.536.0",
