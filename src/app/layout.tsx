@@ -19,15 +19,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased relative`}>
+      <body
+        className={`antialiased relative h-screen w-screen overflow-hidden transition-all`}
+      >
         <BloomEffect />
 
         <ColoredNoiseOverlay />
         {/* <MonochromeNoiseOverlay /> */}
         <TFTOverlay />
-        <div className="relative z-10">
+        <div className="relative z-10 overflow-auto size-full flex flex-col">
           <Navigation />
-          {children}
+          <div className="p-4 pt-0 size-full">{children}</div>
         </div>
         <Analytics />
       </body>

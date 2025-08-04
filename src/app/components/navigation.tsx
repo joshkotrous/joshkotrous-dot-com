@@ -3,10 +3,9 @@ import React from "react";
 
 const Navigation = () => {
   return (
-    <div className="p-4 flex gap-4 justify-between xl:justify-center w-screen items-center fixed">
+    <div className="p-4 flex gap-4 justify-between xl:justify-center w-screen items-center sticky top-0">
       <div className="xl:absolute xl:left-0 xl:pl-4 flex flex-col md:block">
         <span className="bloom-text">Josh Kotrous</span>
-        <br className="md:hidden" />
         <span className="text-[10px] md:text-base">
           {" "}
           {

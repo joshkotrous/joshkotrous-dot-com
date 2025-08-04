@@ -90,7 +90,7 @@ const PostPage = async ({ params }: { params: Promise<{ post: string }> }) => {
 
   return (
     <Suspense>
-      <div className="flex flex-col items-center justify-items-center min-h-screen overflow-hidden px-4 py-24 md:py-20">
+      <div className="flex flex-col items-center justify-items-center min-h-screen overflow-hidden">
         <main className="flex flex-col w-full max-w-5xl gap-4">
           <p className="text-zinc-500 cursor-default">
             <Link href="/blog" className="hover:underline">
