@@ -19,6 +19,12 @@ export function getAllPosts(): Post[] {
   const posts: Post[] = filenames.map((filename) => {
     const filePath = path.join(postsDirectory, filename);
     const fileContents = fs.readFileSync(filePath, "utf8");
+    // Ensure the resolved path is within the postsDirectory to prevent path traversal
+    const resolvedPath = path.resolve(filePath);
+    const postsDirPath = path.resolve(postsDirectory);
+    if (!resolvedPath.startsWith(postsDirPath + path.sep) && resolvedPath !== postsDirPath) {
+      throw new Error('Invalid filename: Path traversal detected');
+    }
     const { data, content } = matter(fileContents);
     const slug = filename.replace(/\.md$/, ""); // Remove ".md"
     return {
