@@ -246,7 +246,7 @@ export default function SineWaveGrid({ className = "" }: SineWaveGridProps) {
     const colorLoc = gl.getUniformLocation(program, "u_color");
     const aspectLoc = gl.getUniformLocation(program, "u_aspect");
 
-    const [r, g, b] = hexToRgb(theme.config.primary);
+    const [r, g, b] = hexToRgb(theme.config.shader || theme.config.primary);
 
     startTimeRef.current = performance.now();
 

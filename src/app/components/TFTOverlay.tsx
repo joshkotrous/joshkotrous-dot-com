@@ -21,7 +21,7 @@ function TFTShader() {
   const shaderMaterial = useMemo(() => {
     // Get color values from theme context
     const colorValues = theme
-      ? hexToVector3(theme.config.primary)
+      ? hexToVector3(theme.config.shader || theme.config.primary)
       : new Vector3(0.996, 0.604, 0.0); // fallback to amber
 
     // TFT shader converted from ShaderToy format to Three.js
@@ -93,7 +93,7 @@ function TFTShader() {
       materialRef.current.uniforms.iTime.value = clock.elapsedTime;
       materialRef.current.uniforms.iResolution.value.set(
         window.innerWidth,
-        window.innerHeight
+        window.innerHeight,
       );
     }
   });

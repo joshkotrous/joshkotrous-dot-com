@@ -84,9 +84,10 @@ export default function Terminal() {
       },
     },
     "set-theme": {
-      description: "Change the theme",
+      description:
+        "Change the theme (green, amber, purple, blue, red, cyan, pink, sunrise, evangelion, synthwave)",
       execute: (args: string = "") => {
-        handleThemeChange(args as "green" | "amber");
+        handleThemeChange(args);
         return `Theme changed to ${args}`;
       },
     },
@@ -302,7 +303,7 @@ export default function Terminal() {
           className="absolute inset-0 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent"
           onClick={() => inputRef.current?.focus()}
         >
-          <div className="sticky top-0 border-b border-primary p-1 px-2 text-xs bg-background z-50 flex justify-between">
+          <div className="sticky top-0 border-b border-[var(--color-primary)] p-1 px-2 text-xs bg-background z-50 flex justify-between">
             <p>terminal</p>
             <Clock />
           </div>

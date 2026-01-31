@@ -314,7 +314,9 @@ export default function ParticleCloud({
     gl.useProgram(program);
 
     // Generate theme-aware color palette
-    const colors = generateColorPalette(theme.config.primary);
+    const colors = generateColorPalette(
+      theme.config.shader || theme.config.primary,
+    );
 
     // Generate particles
     const positions: number[] = [];

@@ -57,11 +57,15 @@ body {
 p,
 a,
 img,
+span {
+  color: var(--color-primary);
+}
+
 h1,
 h2,
 h3,
-span {
-  color: var(--color-primary);
+.text-header {
+  color: var(--color-header, var(--color-primary));
 }
 
 h1 {
@@ -228,7 +232,7 @@ h3 {
 ---break--- */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-primary outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;

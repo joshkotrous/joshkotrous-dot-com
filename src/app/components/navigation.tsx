@@ -21,7 +21,9 @@ const Navigation = () => {
   return (
     <div className="p-2 sm:p-4 flex gap-2 sm:gap-4 justify-between xl:justify-center w-screen items-center sticky top-0 select-none">
       <div className="xl:absolute xl:left-0 xl:pl-4 flex flex-col md:block">
-        <span className="bloom-text text-sm sm:text-base">Josh Kotrous</span>
+        <span className="bloom-text text-sm sm:text-base text-header">
+          Josh Kotrous
+        </span>
         <span className="text-[8px] sm:text-[10px] md:text-base">
           {" "}
           {
@@ -82,9 +84,7 @@ function ThemeDropdown() {
           <DropdownMenuSubContent>
             {themes.map((option) => (
               <DropdownMenuItem
-                onClick={() =>
-                  handleThemeChange(option.name as "green" | "amber" | "purple")
-                }
+                onClick={() => handleThemeChange(option.name)}
                 key={option.name}
               >
                 <p className={option.labelColor}>{option.label}</p>

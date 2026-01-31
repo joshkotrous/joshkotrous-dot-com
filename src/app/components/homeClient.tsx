@@ -19,7 +19,7 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
         <div className="sm:h-1/2 sm:min-h-0">
           <Hero />
         </div>
-        <div className="flex-1 sm:h-1/2 border border-primary flex flex-col min-h-0">
+        <div className="flex-1 sm:h-1/2 border border-[var(--color-primary)] flex flex-col min-h-0">
           <div className="flex-1 overflow-auto">
             <HomepageTabs posts={posts} />
           </div>

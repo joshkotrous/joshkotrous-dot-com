@@ -110,9 +110,9 @@ export default function TerminalBar() {
     },
     "set-theme": {
       description:
-        "Change the theme (green, amber, purple, blue, red, cyan, pink)",
+        "Change the theme (green, amber, purple, blue, red, cyan, pink, sunrise, evangelion, synthwave)",
       execute: (args: string = "") => {
-        handleThemeChange(args as "green" | "amber" | "purple");
+        handleThemeChange(args);
         return `Theme changed to ${args}`;
       },
     },
@@ -291,7 +291,7 @@ export default function TerminalBar() {
       />
 
       {/* Terminal Bar */}
-      <div className="border-t border-primary bg-background">
+      <div className="border-t border-[var(--color-primary)] bg-background">
         {/* Collapsed Header - Always visible */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
@@ -318,7 +318,7 @@ export default function TerminalBar() {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="border-t border-primary">
+              <div className="border-t border-[var(--color-primary)]">
                 <div
                   ref={terminalRef}
                   className="h-32 sm:h-48 overflow-y-auto p-1.5 sm:p-2 font-mono text-xs sm:text-sm"

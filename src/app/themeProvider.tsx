@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 export const ThemeContext = createContext({
   theme: null,
   isLoading: true,
-  handleThemeChange: (theme: "green" | "amber" | "purple") => {},
+  handleThemeChange: (theme: string) => {},
 });
 
 type Theme = {
@@ -18,6 +18,9 @@ type Theme = {
     background: string;
     text: string;
     glow: string;
+    shader?: string; // Optional: separate color for WebGL shaders (defaults to primary if not set)
+    accent?: string; // Optional: accent color for vibe themes
+    header?: string; // Optional: color for h1, h2, h3 headers (defaults to primary if not set)
   };
 };
 
@@ -106,6 +109,52 @@ export const themes: Theme[] = [
       glow: "#ec4899",
     },
   },
+  // Vibe Themes - multi-color themes with distinct shader colors
+  {
+    name: "sunrise",
+    label: "Sunrise",
+    labelColor: "!text-sky-400",
+    config: {
+      primary: "#38bdf8", // Sky blue for text and UI
+      border: "#38bdf8",
+      background: "#0c0a14", // Deep blue-black
+      text: "#38bdf8",
+      glow: "#f59e0b", // Amber glow
+      shader: "#f59e0b", // Amber for shaders
+      accent: "#fb923c", // Orange accent
+      header: "#f59e0b", // Amber for headers
+    },
+  },
+  {
+    name: "evangelion",
+    label: "EVA-01",
+    labelColor: "!text-violet-500",
+    config: {
+      primary: "#8b5cf6", // Purple for text and UI
+      border: "#8b5cf6",
+      background: "#0a0a0f", // Deep dark purple-black
+      text: "#8b5cf6",
+      glow: "#f97316", // Orange glow
+      shader: "#22c55e", // EVA green for shaders
+      accent: "#f97316", // Orange accent
+      header: "#f97316", // Orange for headers
+    },
+  },
+  {
+    name: "synthwave",
+    label: "Synthwave",
+    labelColor: "!text-fuchsia-500",
+    config: {
+      primary: "#d946ef", // Fuchsia/magenta for text and UI
+      border: "#d946ef",
+      background: "#0f0720", // Deep purple-black
+      text: "#d946ef",
+      glow: "#06b6d4", // Cyan glow
+      shader: "#06b6d4", // Cyan for shaders
+      accent: "#f0abfc", // Light pink accent
+      header: "#06b6d4", // Cyan for headers
+    },
+  },
 ];
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
@@ -132,13 +181,25 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       const root = document.documentElement;
       root.style.setProperty("--color-primary", theme.config.primary);
       root.style.setProperty("--color-border", theme.config.border);
+      root.style.setProperty("--border", theme.config.border); // For Tailwind's border-border class
       root.style.setProperty("--glow-color", theme.config.glow);
       root.style.setProperty("--color-background", theme.config.background);
       root.style.setProperty("--color-text", theme.config.text);
+      root.style.setProperty(
+        "--color-shader",
+        theme.config.shader || theme.config.primary,
+      );
+      root.style.setProperty(
+        "--color-header",
+        theme.config.header || theme.config.primary,
+      );
+      if (theme.config.accent) {
+        root.style.setProperty("--color-accent", theme.config.accent);
+      }
     }
   }, [theme]);
 
-  function handleThemeChange(newTheme: "green" | "amber") {
+  function handleThemeChange(newTheme: string) {
     const _theme = themes.find((theme) => theme.name === newTheme);
     if (_theme) {
       setTheme(_theme);

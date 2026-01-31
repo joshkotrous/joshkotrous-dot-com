@@ -71,18 +71,18 @@ export default function BloomEffect() {
           brightness(1.08);
       }
 
-      /* Border elements */
+      /* Border elements - use primary color for glow to match border */
       [class*="border"]:not(.no-glow):not(.no-glow *) {
         box-shadow: 
-          0 0 2px var(--glow-color, rgb(34 197 94)),
-          inset 0 0 2px var(--glow-color, rgb(34 197 94));
+          0 0 2px var(--color-primary, rgb(34 197 94)),
+          inset 0 0 2px var(--color-primary, rgb(34 197 94));
         transition: box-shadow 0.2s ease;
       }
 
       [class*="border"]:not(.no-glow):not(.no-glow *):hover {
         box-shadow: 
-          0 0 4px var(--glow-color, rgb(34 197 94)),
-          inset 0 0 4px var(--glow-color, rgb(34 197 94));
+          0 0 4px var(--color-primary, rgb(34 197 94)),
+          inset 0 0 4px var(--color-primary, rgb(34 197 94));
       }
 
       /* Respect user preferences */
@@ -98,7 +98,7 @@ export default function BloomEffect() {
     // Set the glow color CSS variable
     document.documentElement.style.setProperty(
       "--glow-color",
-      "rgb(34 197 94)"
+      "rgb(34 197 94)",
     );
 
     return () => {

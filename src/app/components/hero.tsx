@@ -36,7 +36,7 @@ export default function Hero() {
             <button
               key={shader}
               onClick={() => setActiveShader(shader)}
-              className={`size-2 rounded-full transition-colors border border-primary ${
+              className={`size-2 rounded-full transition-colors border border-[var(--color-primary)] ${
                 i === currentIndex ? "bg-primary" : "bg-transparent"
               }`}
               aria-label={`Switch to ${shader} shader`}
@@ -48,7 +48,7 @@ export default function Hero() {
       {/* Info Section */}
       <div className="px-2 md:p-6 flex flex-col justify-start md:justify-center space-y-4">
         <div className="space-y-3 text-sm md:text-base">
-          <p>
+          <p className="text-header">
             Building autonomous pentesting agents that find and fix
             vulnerabilities before attackers do.
           </p>
