@@ -158,7 +158,7 @@ const vertexShader = `
         vec2 moveDir = speed > 0.05 ? normalize(trailVel) : vec2(0.0);
         vec2 outwardDir = length(toParticle) > 0.001 ? normalize(toParticle) : vec2(0.0);
         vec2 pushDir = moveDir * 0.7 + outwardDir * 0.3;
-        float displacement = influence * min(speed * 0.1, 0.18);
+        float displacement = influence * min(speed * 0.15, 0.28);
         totalDisplacement += pushDir * displacement;
       }
     }
