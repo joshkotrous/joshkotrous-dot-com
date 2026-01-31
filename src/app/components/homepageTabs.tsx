@@ -12,10 +12,10 @@ export default function HomepageTabs({ posts }: { posts: Post[] }) {
 
   return (
     <div className="w-full overflow-hidden">
-      <div className="flex text-xs text-nowrap w-full border-b border-primary">
+      <div className="flex text-[10px] sm:text-xs text-nowrap w-full border-b border-primary">
         <div
           className={cn(
-            "p-2 px-8 hover:bg-primary/10 cursor-pointer border-r border-primary",
+            "p-1.5 px-3 sm:p-2 sm:px-8 hover:bg-primary/10 cursor-pointer border-r border-primary",
             activeTab === "about" && "bg-primary/10",
           )}
           onClick={() => setActiveTab("about")}
@@ -24,7 +24,7 @@ export default function HomepageTabs({ posts }: { posts: Post[] }) {
         </div>
         <div
           className={cn(
-            "p-2 px-8 hover:bg-primary/10 cursor-pointer border-r border-primary",
+            "p-1.5 px-3 sm:p-2 sm:px-8 hover:bg-primary/10 cursor-pointer border-r border-primary",
             activeTab === "latest-posts" && "bg-primary/10",
           )}
           onClick={() => setActiveTab("latest-posts")}
@@ -33,16 +33,16 @@ export default function HomepageTabs({ posts }: { posts: Post[] }) {
         </div>
         <div
           className={cn(
-            "p-2 px-8 hover:bg-primary/10 cursor-pointer border-r border-primary",
+            "p-1.5 px-3 sm:p-2 sm:px-8 hover:bg-primary/10 cursor-pointer border-r border-primary",
             activeTab === "projects" && "bg-primary/10",
           )}
           onClick={() => setActiveTab("projects")}
         >
           <p>Projects</p>
         </div>
-        <div className="p-2 px-8 flex-1"></div>
+        <div className="p-1.5 px-3 sm:p-2 sm:px-8 flex-1"></div>
       </div>
-      <div className="p-4">
+      <div className="p-2 sm:p-4">
         {activeTab === "about" && <About />}
         {activeTab === "latest-posts" && <LatestPosts posts={posts} />}
         {activeTab === "projects" && <Projects />}
@@ -53,7 +53,7 @@ export default function HomepageTabs({ posts }: { posts: Post[] }) {
 
 function About() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-2 sm:space-y-4 text-xs sm:text-sm md:text-base">
       <p>
         I&apos;m the CTO at{" "}
         <Link className="underline" href="https://pensarai.com">
@@ -74,18 +74,18 @@ function About() {
 
 function LatestPosts({ posts }: { posts: Post[] }) {
   return (
-    <div>
+    <div className="text-xs sm:text-sm md:text-base">
       {posts.map((post, index) => (
         <Link
           href={`/blog/${post.slug}`}
           key={post.title}
           className={cn(
-            "flex items-center gap-2 text-nowrap p-2 -mx-2 transition-colors",
+            "flex items-center gap-1 sm:gap-2 text-nowrap p-1.5 sm:p-2 -mx-1.5 sm:-mx-2 transition-colors",
             index % 2 === 1 && "bg-primary/5",
             "hover:bg-primary/15",
           )}
         >
-          <p className="text-sm opacity-70">{post.date.toString()}</p>
+          <p className="text-[10px] sm:text-sm opacity-70 shrink-0">{post.date.toString()}</p>
           <p className="truncate">{post.title}</p>
         </Link>
       ))}
@@ -118,16 +118,16 @@ function Projects() {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
       {projects.map((i) => (
         <Link
           target="_blank"
           href={i.url}
           key={i.name}
-          className="border border-primary px-3 py-2 space-y-2 hover:bg-primary/10 cursor-pointer transition-all"
+          className="border border-primary px-2 py-1.5 sm:px-3 sm:py-2 space-y-1 sm:space-y-2 hover:bg-primary/10 cursor-pointer transition-all"
         >
-          <p>{i.name}</p>
-          <p className="text-xs opacity-70">{i.description}</p>
+          <p className="text-xs sm:text-sm md:text-base">{i.name}</p>
+          <p className="text-[10px] sm:text-xs opacity-70 line-clamp-2">{i.description}</p>
         </Link>
       ))}
     </div>

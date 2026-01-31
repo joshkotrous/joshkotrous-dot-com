@@ -295,16 +295,16 @@ export default function TerminalBar() {
         {/* Collapsed Header - Always visible */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full flex items-center justify-between p-2 px-4 hover:bg-primary/10 transition-colors cursor-pointer"
+          className="w-full flex items-center justify-between p-1.5 px-2 sm:p-2 sm:px-4 hover:bg-primary/10 transition-colors cursor-pointer"
         >
-          <div className="flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
             <span className="text-primary">{">"}</span>
             <span>terminal</span>
           </div>
           {isExpanded ? (
-            <ChevronDown className="size-4 text-primary" />
+            <ChevronDown className="size-3 sm:size-4 text-primary" />
           ) : (
-            <ChevronUp className="size-4 text-primary" />
+            <ChevronUp className="size-3 sm:size-4 text-primary" />
           )}
         </button>
 
@@ -321,7 +321,7 @@ export default function TerminalBar() {
               <div className="border-t border-primary">
                 <div
                   ref={terminalRef}
-                  className="h-48 overflow-y-auto p-2 font-mono text-sm"
+                  className="h-32 sm:h-48 overflow-y-auto p-1.5 sm:p-2 font-mono text-xs sm:text-sm"
                   onClick={() => inputRef.current?.focus()}
                 >
                   {/* Initial help hint */}

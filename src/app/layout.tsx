@@ -20,6 +20,12 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
         className={`antialiased relative h-screen w-screen overflow-hidden transition-all`}
       >
@@ -31,7 +37,7 @@ export default async function RootLayout({
           <TFTOverlay />
           <div className="relative z-10 overflow-auto size-full flex flex-col">
             <Navigation />
-            <div className="p-4 pt-0 size-full">{children}</div>
+            <div className="p-2 sm:p-4 pt-0 size-full">{children}</div>
           </div>
           <Analytics />
         </ThemeProvider>

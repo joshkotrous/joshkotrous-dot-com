@@ -20,9 +20,9 @@ export default function Hero() {
   const currentIndex = shaders.indexOf(activeShader);
 
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+    <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
       {/* Shader Section */}
-      <div className="aspect-square md:aspect-auto md:h-80 relative overflow-visible">
+      <div className="h-48 md:h-full relative overflow-visible">
         <div className="absolute inset-0 flex items-center justify-center">
           {activeShader === "particles" && (
             <ParticleCloud particleCount={5000} />
@@ -31,7 +31,7 @@ export default function Hero() {
         </div>
 
         {/* Indicator dots */}
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-2">
           {shaders.map((shader, i) => (
             <button
               key={shader}
@@ -46,7 +46,7 @@ export default function Hero() {
       </div>
 
       {/* Info Section */}
-      <div className="p-6 flex flex-col justify-center space-y-4 md:h-80">
+      <div className="px-2 md:p-6 flex flex-col justify-start md:justify-center space-y-4">
         <div className="space-y-3 text-sm md:text-base">
           <p>
             Building autonomous pentesting agents that find and fix
