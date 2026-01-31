@@ -9,10 +9,14 @@ import SineWaveGrid from "./SineWaveGrid";
 
 type ShaderType = "particles" | "sinewave";
 
-export default function Hero() {
-  const [activeShader, setActiveShader] = useState<ShaderType>("particles");
+const shaders: ShaderType[] = ["particles", "sinewave"];
 
-  const shaders: ShaderType[] = ["particles", "sinewave"];
+function getRandomShader(): ShaderType {
+  return shaders[Math.floor(Math.random() * shaders.length)];
+}
+
+export default function Hero() {
+  const [activeShader, setActiveShader] = useState<ShaderType>(getRandomShader);
   const currentIndex = shaders.indexOf(activeShader);
 
   return (
