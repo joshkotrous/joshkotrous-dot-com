@@ -155,6 +155,21 @@ export const themes: Theme[] = [
       header: "#06b6d4", // Cyan for headers
     },
   },
+  {
+    name: "neotokyo",
+    label: "Neo Tokyo",
+    labelColor: "!text-rose-500",
+    config: {
+      primary: "#ff2d55", // Kaneda's bike red for text and UI
+      border: "#ff2d55",
+      background: "#050510", // Deep dark blue-black night
+      text: "#ff2d55",
+      glow: "#00d4ff", // Electric blue neon glow
+      shader: "#00d4ff", // Electric blue for shaders - neon signs
+      accent: "#00d4ff", // Electric blue accent
+      header: "#00d4ff", // Electric blue for headers - like neon signs
+    },
+  },
 ];
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
@@ -167,7 +182,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
     const _theme = localStorage.getItem("theme");
     if (!_theme) {
-      handleThemeChange("amber");
+      // Pick a random theme on first visit
+      const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+      handleThemeChange(randomTheme.name);
       setIsLoading(false);
       return;
     }

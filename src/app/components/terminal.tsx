@@ -85,7 +85,7 @@ export default function Terminal() {
     },
     "set-theme": {
       description:
-        "Change the theme (green, amber, purple, blue, red, cyan, pink, sunrise, evangelion, synthwave)",
+        "Change the theme (green, amber, purple, blue, red, cyan, pink, sunrise, evangelion, synthwave, neotokyo)",
       execute: (args: string = "") => {
         handleThemeChange(args);
         return `Theme changed to ${args}`;
