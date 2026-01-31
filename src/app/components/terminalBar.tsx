@@ -110,7 +110,7 @@ export default function TerminalBar() {
     },
     "set-theme": {
       description:
-        "Change the theme (green, amber, purple, blue, red, cyan, pink, sunrise, evangelion, synthwave, neotokyo)",
+        "Change the theme (green, amber, purple, blue, red, cyan, pink, sunrise, evangelion, synthwave, neotokyo, custom)",
       execute: (args: string = "") => {
         handleThemeChange(args);
         return `Theme changed to ${args}`;

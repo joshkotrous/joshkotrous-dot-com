@@ -2,10 +2,18 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
+export type CustomThemeColors = {
+  primary: string;
+  shader: string;
+  header: string;
+};
+
 export const ThemeContext = createContext({
   theme: null,
   isLoading: true,
   handleThemeChange: (theme: string) => {},
+  applyCustomTheme: (colors: CustomThemeColors) => {},
+  customColors: null as CustomThemeColors | null,
 });
 
 type Theme = {
@@ -170,25 +178,72 @@ export const themes: Theme[] = [
       header: "#00d4ff", // Electric blue for headers - like neon signs
     },
   },
+  {
+    name: "custom",
+    label: "Custom",
+    labelColor: "!text-zinc-400",
+    config: {
+      primary: "#ffffff",
+      border: "#ffffff",
+      background: "#121212",
+      text: "#ffffff",
+      glow: "#ffffff",
+      shader: "#ffffff",
+      header: "#ffffff",
+    },
+  },
 ];
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<Theme | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [customColors, setCustomColors] = useState<CustomThemeColors | null>(
+    null,
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
     const _theme = localStorage.getItem("theme");
+
+    // Load custom colors if they exist
+    const savedCustomColors = localStorage.getItem("customThemeColors");
+    if (savedCustomColors) {
+      setCustomColors(JSON.parse(savedCustomColors));
+    }
+
     if (!_theme) {
-      // Pick a random theme on first visit
-      const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+      // Pick a random theme on first visit (exclude custom theme)
+      const nonCustomThemes = themes.filter((t) => t.name !== "custom");
+      const randomTheme =
+        nonCustomThemes[Math.floor(Math.random() * nonCustomThemes.length)];
       handleThemeChange(randomTheme.name);
       setIsLoading(false);
       return;
     }
-    setTheme(themes.find((theme) => theme.name === _theme) || themes[0]);
+
+    // If it's a custom theme, load and apply custom colors
+    if (_theme === "custom" && savedCustomColors) {
+      const colors = JSON.parse(savedCustomColors) as CustomThemeColors;
+      const customTheme = themes.find((t) => t.name === "custom");
+      if (customTheme) {
+        setTheme({
+          ...customTheme,
+          config: {
+            ...customTheme.config,
+            primary: colors.primary,
+            border: colors.primary,
+            text: colors.primary,
+            glow: colors.primary,
+            shader: colors.shader,
+            header: colors.header,
+          },
+        });
+      }
+    } else {
+      setTheme(themes.find((theme) => theme.name === _theme) || themes[0]);
+    }
     setIsLoading(false);
   }, []);
 
@@ -219,8 +274,46 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   function handleThemeChange(newTheme: string) {
     const _theme = themes.find((theme) => theme.name === newTheme);
     if (_theme) {
-      setTheme(_theme);
+      // If switching to custom, apply saved custom colors
+      if (newTheme === "custom" && customColors) {
+        setTheme({
+          ..._theme,
+          config: {
+            ..._theme.config,
+            primary: customColors.primary,
+            border: customColors.primary,
+            text: customColors.primary,
+            glow: customColors.primary,
+            shader: customColors.shader,
+            header: customColors.header,
+          },
+        });
+      } else {
+        setTheme(_theme);
+      }
       localStorage.setItem("theme", _theme.name);
+    }
+  }
+
+  function applyCustomTheme(colors: CustomThemeColors) {
+    setCustomColors(colors);
+    localStorage.setItem("customThemeColors", JSON.stringify(colors));
+    localStorage.setItem("theme", "custom");
+
+    const customTheme = themes.find((t) => t.name === "custom");
+    if (customTheme) {
+      setTheme({
+        ...customTheme,
+        config: {
+          ...customTheme.config,
+          primary: colors.primary,
+          border: colors.primary,
+          text: colors.primary,
+          glow: colors.primary,
+          shader: colors.shader,
+          header: colors.header,
+        },
+      });
     }
   }
 
@@ -230,6 +323,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         theme,
         isLoading,
         handleThemeChange,
+        applyCustomTheme,
+        customColors,
       }}
     >
       {children}
