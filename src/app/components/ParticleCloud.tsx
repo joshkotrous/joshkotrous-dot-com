@@ -12,6 +12,10 @@ const vertexShader = `
   uniform float u_time;
   uniform float u_pixelRatio;
   uniform float u_aspect;
+  uniform vec2 u_mouse;
+  uniform vec2 u_mouseVel;
+  uniform float u_mouseInfluence;
+  uniform vec4 u_trail[8]; // xy = position, zw = velocity
   
   varying vec3 v_color;
   varying float v_alpha;
@@ -126,11 +130,47 @@ const vertexShader = `
     
     // Apply aspect ratio correction to keep sphere circular
     vec2 correctedPos = vec2(rotatedPos.x / u_aspect, rotatedPos.y);
+    
+    // Mouse interaction with trail for reverb effect
+    vec2 totalDisplacement = vec2(0.0);
+    
+    // Process trail points (older positions with fading influence)
+    for (int i = 0; i < 8; i++) {
+      vec2 trailPos = u_trail[i].xy;
+      vec2 trailVel = u_trail[i].zw;
+      
+      // Skip if trail point is at origin (unused)
+      if (length(trailPos) < 0.001 && length(trailVel) < 0.001) continue;
+      
+      vec2 toParticle = correctedPos - trailPos;
+      vec2 scaledDiff = vec2(toParticle.x * u_aspect, toParticle.y);
+      float dist = length(scaledDiff);
+      
+      // Fade influence based on trail index (older = weaker)
+      float ageFade = 1.0 - float(i) / 8.0;
+      ageFade = ageFade * ageFade; // Quadratic fade
+      
+      // Soft exponential falloff
+      float influence = exp(-dist * dist * 100.0) * u_mouseInfluence * ageFade;
+      
+      if (influence > 0.001) {
+        float speed = length(trailVel);
+        vec2 moveDir = speed > 0.05 ? normalize(trailVel) : vec2(0.0);
+        vec2 outwardDir = length(toParticle) > 0.001 ? normalize(toParticle) : vec2(0.0);
+        vec2 pushDir = moveDir * 0.7 + outwardDir * 0.3;
+        float displacement = influence * min(speed * 0.1, 0.18);
+        totalDisplacement += pushDir * displacement;
+      }
+    }
+    
+    correctedPos += totalDisplacement;
+    
     gl_Position = vec4(correctedPos, 0.0, 1.0);
     
     // Size variation with depth and noise
     float sizeNoise = snoise(vec3(pos.xy * 5.0, u_time * 0.5)) * 0.5 + 0.5;
     float depthFade = smoothstep(-1.0, 1.0, rotatedPos.z) * 0.5 + 0.5;
+    
     gl_PointSize = a_size * u_pixelRatio * (0.5 + sizeNoise * 0.5) * depthFade;
     
     // Fade alpha based on depth
@@ -193,6 +233,11 @@ export default function ParticleCloud({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const startTimeRef = useRef<number>(0);
+  const mouseRef = useRef({ x: 0, y: 0, vx: 0, vy: 0, influence: 0 });
+  const lastMouseRef = useRef({ x: 0, y: 0, time: 0 });
+  const mouseTrailRef = useRef<
+    Array<{ x: number; y: number; vx: number; vy: number; age: number }>
+  >([]);
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -205,6 +250,35 @@ export default function ParticleCloud({
       antialias: true,
     });
     if (!gl) return;
+
+    // Mouse tracking with velocity
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const now = performance.now();
+      // Convert to normalized coordinates (-1 to 1)
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+
+      // Calculate velocity
+      const dt = Math.max(1, now - lastMouseRef.current.time);
+      const vx = ((x - lastMouseRef.current.x) / dt) * 1000;
+      const vy = ((y - lastMouseRef.current.y) / dt) * 1000;
+
+      mouseRef.current.x = x;
+      mouseRef.current.y = y;
+      mouseRef.current.vx = vx;
+      mouseRef.current.vy = vy;
+      mouseRef.current.influence = 1;
+
+      lastMouseRef.current = { x, y, time: now };
+    };
+
+    const handleMouseLeave = () => {
+      mouseRef.current.influence = 0;
+    };
+
+    canvas.addEventListener("mousemove", handleMouseMove);
+    canvas.addEventListener("mouseleave", handleMouseLeave);
 
     // Resize handler
     const resize = () => {
@@ -315,6 +389,16 @@ export default function ParticleCloud({
     const timeLoc = gl.getUniformLocation(program, "u_time");
     const pixelRatioLoc = gl.getUniformLocation(program, "u_pixelRatio");
     const aspectLoc = gl.getUniformLocation(program, "u_aspect");
+    const mouseLoc = gl.getUniformLocation(program, "u_mouse");
+    const mouseVelLoc = gl.getUniformLocation(program, "u_mouseVel");
+    const mouseInfluenceLoc = gl.getUniformLocation(
+      program,
+      "u_mouseInfluence",
+    );
+    const trailLocs: WebGLUniformLocation[] = [];
+    for (let i = 0; i < 8; i++) {
+      trailLocs.push(gl.getUniformLocation(program, `u_trail[${i}]`)!);
+    }
 
     // Enable blending for soft particles
     gl.enable(gl.BLEND);
@@ -322,9 +406,44 @@ export default function ParticleCloud({
 
     startTimeRef.current = performance.now();
 
+    // Smoothed mouse influence for transitions
+    let smoothInfluence = 0;
+    let lastTrailUpdate = 0;
+
     const render = () => {
       const time = (performance.now() - startTimeRef.current) / 1000;
       const aspect = canvas.width / canvas.height;
+      const now = performance.now();
+
+      // Smooth the mouse influence - fast response
+      const targetInfluence = mouseRef.current.influence;
+      smoothInfluence += (targetInfluence - smoothInfluence) * 0.3;
+
+      // Update trail every 30ms when mouse is active
+      if (now - lastTrailUpdate > 30 && mouseRef.current.influence > 0.5) {
+        const speed = Math.sqrt(
+          mouseRef.current.vx ** 2 + mouseRef.current.vy ** 2,
+        );
+        if (speed > 0.1) {
+          mouseTrailRef.current.unshift({
+            x: mouseRef.current.x,
+            y: mouseRef.current.y,
+            vx: mouseRef.current.vx,
+            vy: mouseRef.current.vy,
+            age: 0,
+          });
+          if (mouseTrailRef.current.length > 8) {
+            mouseTrailRef.current.pop();
+          }
+        }
+        lastTrailUpdate = now;
+      }
+
+      // Age and fade trail points
+      mouseTrailRef.current = mouseTrailRef.current.filter((p) => {
+        p.age += 1;
+        return p.age < 30; // Remove after ~1 second
+      });
 
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
@@ -351,6 +470,26 @@ export default function ParticleCloud({
       gl.uniform1f(timeLoc, time);
       gl.uniform1f(pixelRatioLoc, Math.min(window.devicePixelRatio, 2));
       gl.uniform1f(aspectLoc, aspect);
+      gl.uniform2f(mouseLoc, mouseRef.current.x, mouseRef.current.y);
+      gl.uniform2f(mouseVelLoc, mouseRef.current.vx, mouseRef.current.vy);
+      gl.uniform1f(mouseInfluenceLoc, smoothInfluence);
+
+      // Pass trail data to shader
+      for (let i = 0; i < 8; i++) {
+        const trail = mouseTrailRef.current[i];
+        if (trail) {
+          const fade = 1 - trail.age / 30;
+          gl.uniform4f(
+            trailLocs[i],
+            trail.x,
+            trail.y,
+            trail.vx * fade,
+            trail.vy * fade,
+          );
+        } else {
+          gl.uniform4f(trailLocs[i], 0, 0, 0, 0);
+        }
+      }
 
       gl.drawArrays(gl.POINTS, 0, particleCount);
 
@@ -360,6 +499,8 @@ export default function ParticleCloud({
     render();
 
     return () => {
+      canvas.removeEventListener("mousemove", handleMouseMove);
+      canvas.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(animationRef.current);
       gl.deleteProgram(program);
@@ -372,7 +513,7 @@ export default function ParticleCloud({
     <canvas
       ref={canvasRef}
       className={`w-full h-full ${className}`}
-      style={{ background: "transparent" }}
+      style={{ background: "transparent", cursor: "pointer" }}
     />
   );
 }
