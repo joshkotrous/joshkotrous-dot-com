@@ -1,17 +1,47 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { IoLogoGithub } from "react-icons/io";
 import ParticleCloud from "./ParticleCloud";
+import SineWaveGrid from "./SineWaveGrid";
+
+type ShaderType = "particles" | "sinewave";
+
+const shaders: ShaderType[] = ["particles", "sinewave"];
+
+function getRandomShader(): ShaderType {
+  return shaders[Math.floor(Math.random() * shaders.length)];
+}
 
 export default function Hero() {
+  const [activeShader, setActiveShader] = useState<ShaderType>(getRandomShader);
+  const currentIndex = shaders.indexOf(activeShader);
+
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-      {/* Particle Cloud Section */}
-      <div className="aspect-square md:aspect-auto md:h-80 relative overflow-hidden">
+      {/* Shader Section */}
+      <div className="aspect-square md:aspect-auto md:h-80 relative overflow-visible">
         <div className="absolute inset-0 flex items-center justify-center">
-          <ParticleCloud particleCount={5000} />
+          {activeShader === "particles" && (
+            <ParticleCloud particleCount={5000} />
+          )}
+          {activeShader === "sinewave" && <SineWaveGrid />}
+        </div>
+
+        {/* Indicator dots */}
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+          {shaders.map((shader, i) => (
+            <button
+              key={shader}
+              onClick={() => setActiveShader(shader)}
+              className={`size-2 rounded-full transition-colors border border-primary ${
+                i === currentIndex ? "bg-primary" : "bg-transparent"
+              }`}
+              aria-label={`Switch to ${shader} shader`}
+            />
+          ))}
         </div>
       </div>
 
