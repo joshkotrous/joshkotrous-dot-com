@@ -179,6 +179,20 @@ export const themes: Theme[] = [
     },
   },
   {
+    name: "white",
+    label: "White",
+    labelColor: "!text-white",
+    config: {
+      primary: "#ffffff", // White for text and UI
+      border: "#ffffff",
+      background: "#121212", // Dark background
+      text: "#ffffff",
+      glow: "#ffffff", // White glow
+      shader: "#ffffff", // White for shaders
+      header: "#ffffff", // White for headers
+    },
+  },
+  {
     name: "custom",
     label: "Custom",
     labelColor: "!text-zinc-400",

@@ -6,10 +6,11 @@ import { FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { IoLogoGithub } from "react-icons/io";
 import ParticleCloud from "./ParticleCloud";
 import SineWaveGrid from "./SineWaveGrid";
+import DysonSphere from "./DysonSphere";
 
-type ShaderType = "particles" | "sinewave";
+type ShaderType = "particles" | "sinewave" | "dyson";
 
-const shaders: ShaderType[] = ["particles", "sinewave"];
+const shaders: ShaderType[] = ["particles", "sinewave", "dyson"];
 
 function getRandomShader(): ShaderType {
   return shaders[Math.floor(Math.random() * shaders.length)];
@@ -28,6 +29,7 @@ export default function Hero() {
             <ParticleCloud particleCount={5000} />
           )}
           {activeShader === "sinewave" && <SineWaveGrid />}
+          {activeShader === "dyson" && <DysonSphere />}
         </div>
 
         {/* Indicator dots */}
