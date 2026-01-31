@@ -27,9 +27,9 @@ const Navigation = () => {
           {
             // eslint-disable-next-line react/jsx-no-comment-textnodes
           }
-          // Founding Engineer @{" "}
+          // CTO @{" "}
           <Link
-            href="https://pensarai.app"
+            href="https://pensarai.com"
             target="_blank"
             className="hover:underline"
           >

@@ -10,7 +10,7 @@ import { ThemeProvider } from "./themeProvider";
 
 export const metadata: Metadata = {
   title: "Josh Kotrous",
-  description: "Founding Engineer @ Pensar",
+  description: "CTO @ Pensar - Building autonomous pentesting agents",
 };
 
 export default async function RootLayout({

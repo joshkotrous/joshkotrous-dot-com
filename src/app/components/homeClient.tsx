@@ -1,7 +1,8 @@
 "use client";
 
 import HomepageTabs from "./homepageTabs";
-import Terminal from "./terminal";
+import Hero from "./hero";
+import TerminalBar from "./terminalBar";
 import { Post } from "../lib/post";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -41,7 +42,20 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
     return <LoadingComponent />;
   }
 
-  // // If already visited, render content immediately
+  // Content layout used in both cases
+  const MainContent = () => (
+    <div className="flex flex-col h-full">
+      <Hero />
+      <div className="flex-1 mt-4 border border-primary flex flex-col min-h-0">
+        <div className="flex-1 overflow-auto">
+          <HomepageTabs posts={posts} />
+        </div>
+        <TerminalBar />
+      </div>
+    </div>
+  );
+
+  // If already visited, render content immediately
   if (skipAnimation) {
     return (
       <motion.div
@@ -49,12 +63,9 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
-        className="border size-full border-primary"
+        className="size-full"
       >
-        <div className="border-b border-primary h-96">
-          <Terminal />
-        </div>
-        <HomepageTabs posts={posts} />
+        <MainContent />
       </motion.div>
     );
   }
@@ -78,10 +89,7 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
             transition={{ duration: 0.5, delay: 1 }}
             className="w-full h-full"
           >
-            <div className="border-b border-primary h-96">
-              <Terminal />
-            </div>
-            <HomepageTabs posts={posts} />
+            <MainContent />
           </motion.div>
         )}
       </AnimatePresence>
