@@ -94,9 +94,9 @@ const fragmentShader = `
     // Single rotation matrix for all hexes - they rotate together as a group
     mat3 hexRot = rotateY(u_time * 0.2) * rotateX(u_time * 0.12);
     
-    float sphereRadius = 0.5;
-    float hexSize = 0.09;
-    float coreRadius = 0.18;
+    float sphereRadius = 0.9;
+    float hexSize = 0.125;
+    float coreRadius = 0.35;
     
     // Core rotation (slower than outer shell)
     mat3 coreRot = rotateY(u_time * 0.15) * rotateX(u_time * 0.1);
