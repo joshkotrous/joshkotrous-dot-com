@@ -18,9 +18,9 @@ const fragmentShader = `
   uniform vec3 u_color;
   uniform float u_aspect;
   
-  // Isometric projection helpers
+  // Isometric projection helpers (flipped direction)
   vec2 toIso(vec3 p) {
-    float isoX = (p.x - p.z) * 0.866;
+    float isoX = (p.z - p.x) * 0.866;
     float isoY = (p.x + p.z) * 0.5 - p.y;
     return vec2(isoX, isoY);
   }
@@ -57,9 +57,14 @@ const fragmentShader = `
     float waveHeight = 0.4;
     
     // Draw multiple sine wave lines in isometric view
-    for (int w = 0; w < 8; w++) {
-      float waveOffset = float(w) * 0.8 - 2.8;
-      float wavePhase = float(w) * 0.4;
+    float waveSpacing = 1.2;
+    for (int w = 0; w < 3; w++) {
+      float waveOffset = float(w) * waveSpacing - waveSpacing;
+      float wavePhase = float(w) * 0.7;
+      
+      // Different time multipliers for each wave for variation
+      float timeVar = 1.0 + float(w) * 0.3;
+      float timeOffset = float(w) * 0.5;
       
       // Each wave is a series of connected line segments
       vec2 prevPoint = vec2(0.0);
@@ -70,10 +75,10 @@ const fragmentShader = `
         float x = t * gridWidth - gridWidth * 0.5;
         float z = waveOffset;
         
-        // Multiple overlapping sine waves for complexity
-        float y = sin(x * 3.0 + u_time * 1.5 + wavePhase) * waveHeight * 0.5;
-        y += sin(x * 5.0 - u_time * 0.8 + wavePhase * 2.0) * waveHeight * 0.25;
-        y += sin(x * 1.5 + u_time * 2.0 + wavePhase * 0.5) * waveHeight * 0.25;
+        // Multiple overlapping sine waves with variation per wave - smoother motion
+        float y = sin(x * 2.0 + u_time * (1.2 + float(w) * 0.3) + wavePhase) * waveHeight * 0.5;
+        y += sin(x * 3.5 - u_time * (0.8 + float(w) * 0.2) + wavePhase * 2.0) * waveHeight * 0.25;
+        y += sin(x * 1.2 + u_time * (1.5 - float(w) * 0.2) + wavePhase * 0.5) * waveHeight * 0.25;
         
         // Fade at edges
         float edgeFade = smoothstep(0.0, 0.2, t) * smoothstep(1.0, 0.8, t);
@@ -87,16 +92,16 @@ const fragmentShader = `
           float d = lineDist(uv, prevPoint, isoPos);
           
           // Distance-based intensity (closer waves brighter)
-          float depthFade = 1.0 - float(w) / 12.0;
+          float depthFade = 1.0 - float(w) / 5.0;
           
           // Core line - sharp
-          float core = smoothstep(0.025, 0.004, d) * depthFade * 0.9;
+          float core = smoothstep(0.045, 0.008, d) * depthFade * 0.9;
           
           // Inner glow
-          float innerGlow = glow(d, 0.012, 150.0) * depthFade * 0.4;
+          float innerGlow = glow(d, 0.02, 100.0) * depthFade * 0.4;
           
           // Outer glow - subtle
-          float outerGlow = glow(d, 0.025, 50.0) * depthFade * 0.15;
+          float outerGlow = glow(d, 0.04, 30.0) * depthFade * 0.15;
           
           totalGlow += core + innerGlow + outerGlow;
         }
@@ -106,10 +111,10 @@ const fragmentShader = `
       }
     }
     
-    // Draw horizontal grid lines (depth lines)
-    for (int i = 0; i < 12; i++) {
-      float t = float(i) / 11.0;
-      float z = t * gridDepth - gridDepth * 0.5;
+    // Draw horizontal grid lines (depth lines) - align with wave positions
+    // Waves are at z = -1.2, 0, 1.2, so grid lines at -1.8, -1.2, -0.6, 0, 0.6, 1.2, 1.8
+    for (int i = 0; i < 7; i++) {
+      float z = float(i) * 0.6 - 1.8;
       
       vec2 startIso = toIso(vec3(-gridWidth * 0.5, 0.0, z)) * 0.4;
       vec2 endIso = toIso(vec3(gridWidth * 0.5, 0.0, z)) * 0.4;
@@ -120,13 +125,14 @@ const fragmentShader = `
       totalGlow += gridCore + gridGlow;
     }
     
-    // Draw vertical grid lines
+    // Draw vertical grid lines - match sine wave extent
+    float gridDepthExtent = 1.8; // matches horizontal grid extent
     for (int i = 0; i < 10; i++) {
       float t = float(i) / 9.0;
       float x = t * gridWidth - gridWidth * 0.5;
       
-      vec2 startIso = toIso(vec3(x, 0.0, -gridDepth * 0.5)) * 0.4;
-      vec2 endIso = toIso(vec3(x, 0.0, gridDepth * 0.5)) * 0.4;
+      vec2 startIso = toIso(vec3(x, 0.0, -gridDepthExtent)) * 0.4;
+      vec2 endIso = toIso(vec3(x, 0.0, gridDepthExtent)) * 0.4;
       
       float d = lineDist(uv, startIso, endIso);
       float gridCore = smoothstep(0.002, 0.0, d) * 0.1;
