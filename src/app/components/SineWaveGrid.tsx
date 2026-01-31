@@ -44,8 +44,8 @@ const fragmentShader = `
     uv.x *= u_aspect;
     
     // Scale and position the grid
-    uv *= 1.8;
-    uv.y -= 0.2;
+    uv *= 1.4;
+    uv.y -= 0.1;
     
     vec3 col = vec3(0.0);
     float totalGlow = 0.0;
@@ -90,13 +90,13 @@ const fragmentShader = `
           float depthFade = 1.0 - float(w) / 12.0;
           
           // Core line - sharp
-          float core = smoothstep(0.003, 0.0, d) * depthFade * 0.8;
+          float core = smoothstep(0.025, 0.004, d) * depthFade * 0.9;
           
           // Inner glow
-          float innerGlow = glow(d, 0.002, 400.0) * depthFade * 0.5;
+          float innerGlow = glow(d, 0.012, 150.0) * depthFade * 0.4;
           
           // Outer glow - subtle
-          float outerGlow = glow(d, 0.008, 100.0) * depthFade * 0.2;
+          float outerGlow = glow(d, 0.025, 50.0) * depthFade * 0.15;
           
           totalGlow += core + innerGlow + outerGlow;
         }
@@ -134,6 +134,13 @@ const fragmentShader = `
       totalGlow += gridCore + gridGlow;
     }
     
+    // Edge fade to prevent glow overflow
+    vec2 edgeUV = gl_FragCoord.xy / u_resolution;
+    float edgeFadeX = smoothstep(0.0, 0.15, edgeUV.x) * smoothstep(1.0, 0.85, edgeUV.x);
+    float edgeFadeY = smoothstep(0.0, 0.15, edgeUV.y) * smoothstep(1.0, 0.85, edgeUV.y);
+    float edgeFade = edgeFadeX * edgeFadeY;
+    totalGlow *= edgeFade;
+    
     // Apply color with glow
     col = u_color * totalGlow;
     
@@ -142,10 +149,10 @@ const fragmentShader = `
     col *= scanLine;
     
     // Tone mapping - prevent blowout
-    col = col / (col + 0.5);
+    col = col / (col + 0.6);
     
     // Alpha based on brightness
-    float alpha = min(1.0, totalGlow * 1.5);
+    float alpha = min(1.0, totalGlow * 1.5) * edgeFade;
     
     gl_FragColor = vec4(col, alpha);
   }

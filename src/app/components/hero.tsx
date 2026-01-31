@@ -18,7 +18,7 @@ export default function Hero() {
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
       {/* Shader Section */}
-      <div className="aspect-square md:aspect-auto md:h-80 relative overflow-hidden">
+      <div className="aspect-square md:aspect-auto md:h-80 relative overflow-visible">
         <div className="absolute inset-0 flex items-center justify-center">
           {activeShader === "particles" && (
             <ParticleCloud particleCount={5000} />
