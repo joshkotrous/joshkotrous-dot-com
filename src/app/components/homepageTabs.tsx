@@ -11,8 +11,8 @@ export default function HomepageTabs({ posts }: { posts: Post[] }) {
   >("about");
 
   return (
-    <div className="w-full overflow-hidden">
-      <div className="flex text-[10px] sm:text-xs text-nowrap w-full border-b border-primary">
+    <div className="w-full h-full flex flex-col">
+      <div className="sticky top-0 z-10 bg-background flex text-[10px] sm:text-xs text-nowrap w-full border-b border-primary">
         <div
           className={cn(
             "p-1.5 px-3 sm:p-2 sm:px-8 hover:bg-primary/10 cursor-pointer border-r border-primary",
@@ -42,7 +42,7 @@ export default function HomepageTabs({ posts }: { posts: Post[] }) {
         </div>
         <div className="p-1.5 px-3 sm:p-2 sm:px-8 flex-1"></div>
       </div>
-      <div className="p-2 sm:p-4">
+      <div className="p-2 sm:p-4 flex-1 overflow-auto">
         {activeTab === "about" && <About />}
         {activeTab === "latest-posts" && <LatestPosts posts={posts} />}
         {activeTab === "projects" && <Projects />}
@@ -85,7 +85,9 @@ function LatestPosts({ posts }: { posts: Post[] }) {
             "hover:bg-primary/15",
           )}
         >
-          <p className="text-[10px] sm:text-sm opacity-70 shrink-0">{post.date.toString()}</p>
+          <p className="text-[10px] sm:text-sm opacity-70 shrink-0">
+            {post.date.toString()}
+          </p>
           <p className="truncate">{post.title}</p>
         </Link>
       ))}
@@ -127,7 +129,9 @@ function Projects() {
           className="border border-primary px-2 py-1.5 sm:px-3 sm:py-2 space-y-1 sm:space-y-2 hover:bg-primary/10 cursor-pointer transition-all"
         >
           <p className="text-xs sm:text-sm md:text-base">{i.name}</p>
-          <p className="text-[10px] sm:text-xs opacity-70 line-clamp-2">{i.description}</p>
+          <p className="text-[10px] sm:text-xs opacity-70 line-clamp-2">
+            {i.description}
+          </p>
         </Link>
       ))}
     </div>

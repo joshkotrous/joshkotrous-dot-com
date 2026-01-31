@@ -15,11 +15,11 @@ export default function HomeClient({ posts }: { posts: Post[] }) {
       transition={{ duration: 0.25 }}
       className="size-full"
     >
-      <div className="flex flex-col h-full">
-        <div className="h-1/2 min-h-0">
+      <div className="flex flex-col h-full gap-4 sm:gap-6">
+        <div className="sm:h-1/2 sm:min-h-0">
           <Hero />
         </div>
-        <div className="h-1/2 mt-2 sm:mt-4 border border-primary flex flex-col min-h-0">
+        <div className="flex-1 sm:h-1/2 border border-primary flex flex-col min-h-0">
           <div className="flex-1 overflow-auto">
             <HomepageTabs posts={posts} />
           </div>

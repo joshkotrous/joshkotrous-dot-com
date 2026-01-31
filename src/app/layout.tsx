@@ -27,7 +27,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`antialiased relative h-screen w-screen overflow-hidden transition-all`}
+        className={`antialiased relative h-screen w-screen overflow-auto sm:overflow-hidden transition-all`}
       >
         <ThemeProvider>
           <BloomEffect />
@@ -37,7 +37,9 @@ export default async function RootLayout({
           <TFTOverlay />
           <div className="relative z-10 overflow-auto size-full flex flex-col">
             <Navigation />
-            <div className="p-2 sm:p-4 pt-0 size-full">{children}</div>
+            <div className="p-2 sm:p-4 pt-0 pb-5 sm:pb-4 size-full">
+              {children}
+            </div>
           </div>
           <Analytics />
         </ThemeProvider>
